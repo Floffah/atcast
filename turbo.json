@@ -17,7 +17,8 @@
         "setup",
         "lint",
         "^build"
-      ]
+      ],
+      "env": ["DATABASE_URL", "NEXT_PUBLIC_BASE_URL"]
     },
     "lint": {
       "dependsOn": [
