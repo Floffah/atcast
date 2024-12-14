@@ -39,8 +39,7 @@
             },
             "errors": [
                 {
-                    "name": "InvalidHandle",
-                    "description": "The handle provided is not valid"
+                    "name": "InvalidHandle"
                 }
             ]
         },
