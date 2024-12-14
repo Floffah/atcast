@@ -15,6 +15,5 @@
         "https://atcast.floffah.dev/login/oauth"
     ],
     "dpop_bound_access_tokens": true,
-    "token_endpoint_auth_method": "private_key_jwt",
-    "token_endpoint_auth_signing_alg": "ES256"
+    "token_endpoint_auth_method": "none"
 }
