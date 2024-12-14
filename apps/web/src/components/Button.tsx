@@ -1,7 +1,6 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import { ReactNodeView } from "@tiptap/react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import {
