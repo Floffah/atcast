@@ -12,7 +12,7 @@
   },
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup --minify --clean",
+    "build": "tsup --minify --clean && bun run scripts/migrate.ts",
     "migrate": "bunx drizzle-kit generate && bun run scripts/migrate.ts"
   },
   "dependencies": {
