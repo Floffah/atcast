@@ -1,0 +1,1 @@
+ALTER TABLE "user_sessions" RENAME COLUMN "pcke_verifier" TO "pkce_verifier";

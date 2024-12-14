@@ -1,0 +1,18 @@
+{
+    "client_id": "https://atcast.floffah.dev/client-metadata.json",
+    "client_uri": "https://atcast.floffah.dev/",
+    "client_name": "AtCast",
+    "application_type": "web",
+    "grant_types": [
+        "authorization_code",
+        "refresh_token"
+    ],
+    "scope": "atproto openid profile email",
+    "response_types": [
+        "code"
+    ],
+    "redirect_uris": [
+        "https://atcast.floffah.dev/login/oauth"
+    ],
+    "dpop_bound_access_tokens": true
+}

@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* note: tailwind dark selector only stable for children */
+
+html,
+html.light {
+    @apply bg-white text-gray-900;
+}
+
+html.dark {
+    @apply bg-gray-950 text-white;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not(.light) {
+        @apply bg-gray-950 text-white;
+    }
+}
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
