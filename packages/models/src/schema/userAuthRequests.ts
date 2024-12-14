@@ -1,11 +1,4 @@
-import {
-    integer,
-    json,
-    pgTable,
-    serial,
-    timestamp,
-    varchar,
-} from "drizzle-orm/pg-core";
+import { json, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const userAuthRequests = pgTable("user_auth_requests", {
     id: serial("id").primaryKey(),

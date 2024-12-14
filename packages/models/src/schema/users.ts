@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { createdAt, publicId } from "@/schema/fields";
+import { createdAt } from "@/schema/fields";
 
 export const users = pgTable(
     "users",

@@ -54,16 +54,20 @@ export const LiveAtcastAuthCreateSession = {
                 encoding: "application/json",
                 schema: {
                     type: "object",
-                    required: ["handle", "code"],
+                    required: ["iss", "state", "code"],
                     properties: {
-                        handle: {
+                        iss: {
                             type: "string",
-                            format: "handle",
-                            description: "User handle",
+                            format: "uri",
+                            description: "Issuer",
+                        },
+                        state: {
+                            type: "string",
+                            description: "State",
                         },
                         code: {
                             type: "string",
-                            description: "OAuth code",
+                            description: "Authorization code",
                         },
                     },
                 },
@@ -83,10 +87,11 @@ export const LiveAtcastAuthCreateSession = {
             },
             errors: [
                 {
-                    name: "InvalidHandle",
+                    name: "InvalidInput",
                 },
                 {
-                    name: "InvalidToken",
+                    name: "InvalidUser",
+                    description: "User does not exist or is not identifiable",
                 },
             ],
         },

@@ -7,7 +7,15 @@ export function getRedirectUri() {
 }
 
 export function getClientId() {
-    return process.env.NODE_ENV === "production"
-        ? clientMetadata.client_id
-        : "http://localhost";
+    if (process.env.NODE_ENV === "production") {
+        return clientMetadata.client_id;
+    }
+
+    // see virtual metadata under "Localhost Client Development" in https://atproto.com/specs/oauth#clients
+    const params = new URLSearchParams({
+        redirect_uri: getRedirectUri(),
+        scope: clientMetadata.scope,
+    });
+
+    return "http://localhost?" + params.toString();
 }

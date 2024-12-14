@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
+import { timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { generatePublicId } from "@/lib";
-import {timestamp, varchar} from "drizzle-orm/pg-core";
 
 export const publicId = () =>
     varchar("public_id", { length: 36 })

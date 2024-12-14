@@ -42,12 +42,13 @@ class AuthNS {
         );
     }
 
-    createSessionFinish(handle: string, code: string) {
+    createSessionFinish(iss: string, state: string, code: string) {
         return this.client.call(
             "live.atcast.auth.createSession#finish",
             undefined,
             {
-                handle,
+                iss,
+                state,
                 code,
             },
         );
