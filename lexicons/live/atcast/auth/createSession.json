@@ -40,6 +40,9 @@
             "errors": [
                 {
                     "name": "InvalidHandle"
+                },
+                {
+                    "name": "FailedToCreateRequest"
                 }
             ]
         },

@@ -86,6 +86,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
                 code_challenge_method: "S256",
             }),
         }).then((res) => res.json());
+        console.log(parResponse);
 
         if (!parResponse.request_uri) {
             return new JSONResponse(
