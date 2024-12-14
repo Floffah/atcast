@@ -1,6 +1,6 @@
 {
-    "client_id": "https://atcast.floffah.dev/client-metadata.json",
-    "client_uri": "https://atcast.floffah.dev/",
+    "client_id": "https://atcast.live/client-metadata.json",
+    "client_uri": "https://atcast.live/",
     "client_name": "AtCast",
     "application_type": "web",
     "grant_types": [
@@ -12,7 +12,7 @@
         "code"
     ],
     "redirect_uris": [
-        "https://atcast.floffah.dev/login/oauth"
+        "https://atcast.live/login/oauth"
     ],
     "dpop_bound_access_tokens": true,
     "token_endpoint_auth_method": "none"

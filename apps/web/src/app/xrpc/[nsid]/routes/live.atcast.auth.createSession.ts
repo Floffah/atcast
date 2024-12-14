@@ -92,6 +92,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
             return new JSONResponse(
                 {
                     error: "FailedToCreateRequest",
+                    error_description: parResponse.error,
                 },
                 {
                     status: 500,
@@ -278,7 +279,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
             secure: process.env.NODE_ENV === "production",
             domain:
                 process.env.NODE_ENV === "production"
-                    ? "atcast.floffah.dev"
+                    ? "atcast.live"
                     : "localhost",
             sameSite: "strict",
             expires: expiresAt,
