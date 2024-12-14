@@ -26,13 +26,13 @@
                 "schema": {
                     "type": "object",
                     "required": [
-                        "redirectUrl"
+                        "url"
                     ],
                     "properties": {
-                        "redirectUrl": {
+                        "url": {
                             "type": "string",
                             "format": "uri",
-                            "description": "The URL to send the user to"
+                            "description": "Authorization URL to send the user to"
                         }
                     }
                 }

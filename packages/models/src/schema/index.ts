@@ -1,4 +1,4 @@
 export * from "./enums";
-export * from "./userOAuthProviders";
+export * from "./userAuthRequests";
 export * from "./users";
 export * from "./userSessions";

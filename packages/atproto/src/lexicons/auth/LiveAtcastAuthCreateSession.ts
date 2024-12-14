@@ -26,12 +26,13 @@ export const LiveAtcastAuthCreateSession = {
                 encoding: "application/json",
                 schema: {
                     type: "object",
-                    required: ["redirectUrl"],
+                    required: ["url"],
                     properties: {
-                        redirectUrl: {
+                        url: {
                             type: "string",
                             format: "uri",
-                            description: "The URL to send the user to",
+                            description:
+                                "Authorization URL to send the user to",
                         },
                     },
                 },
@@ -39,6 +40,9 @@ export const LiveAtcastAuthCreateSession = {
             errors: [
                 {
                     name: "InvalidHandle",
+                },
+                {
+                    name: "FailedToCreateRequest",
                 },
             ],
         },

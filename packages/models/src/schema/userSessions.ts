@@ -1,8 +1,10 @@
 import {
     index,
     integer,
+    json,
     pgTable,
     serial,
+    text,
     timestamp,
     varchar,
 } from "drizzle-orm/pg-core";
@@ -11,10 +13,11 @@ export const userSessions = pgTable(
     "user_sessions",
     {
         id: serial("id").primaryKey(),
-        userId: integer("user_id"),
-        handle: varchar("handle", { length: 256 }).notNull(),
+        userId: integer("user_id").notNull(),
         token: varchar("token", { length: 256 }).notNull().unique(),
-        pkceVerifier: varchar("pkce_verifier", { length: 128 }).notNull(),
+        accessToken: text("access_token").notNull(),
+        refreshToken: text("refresh_token"),
+        jwk: json("jwk"),
         expiresAt: timestamp("expires_at").notNull(),
         lastUsedAt: timestamp("last_used_at"),
     },

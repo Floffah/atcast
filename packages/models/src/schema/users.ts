@@ -7,7 +7,7 @@ export const users = pgTable(
     "users",
     {
         id: serial("id").primaryKey(),
-        handle: varchar("name", { length: 256 }).notNull().unique(),
+        name: varchar("name", { length: 256 }).notNull().unique(),
         did: text("did").notNull().unique(),
         email: varchar("email", { length: 320 }).unique(),
         createdAt: createdAt(),

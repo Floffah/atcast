@@ -1,0 +1,1 @@
+ALTER TABLE "user_auth_requests" RENAME COLUMN "handle" TO "did";

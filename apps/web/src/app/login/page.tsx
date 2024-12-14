@@ -1,6 +1,7 @@
 "use client";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { InferType, object, string } from "yup";
 
@@ -15,6 +16,8 @@ const formSchema = object({
 type FormValues = InferType<typeof formSchema>;
 
 export default function LoginPage() {
+    const router = useRouter();
+
     const xrpc = useXRPCClient();
 
     const form = useForm<FormValues>({
@@ -22,7 +25,13 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (values: FormValues) => {
-        await xrpc.live.atcast.auth.createSessionStart(values.handle);
+        const res = await xrpc.live.atcast.auth.createSessionStart(
+            values.handle,
+        );
+
+        if (!!res.data?.url) {
+            router.push(res.data.url);
+        }
     };
 
     return (

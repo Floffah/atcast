@@ -3,11 +3,8 @@ import { migrate } from "drizzle-orm/neon-http/migrator";
 
 import { db } from "@/client";
 
-if (process.env.CI == "1" && process.env.DATABASE_URL) {
-    console.log("Migrating database...");
+if (process.env.DATABASE_URL) {
     migrate(db, {
         migrationsFolder: "./drizzle",
     });
-} else {
-    console.log("Skipping database migration");
 }

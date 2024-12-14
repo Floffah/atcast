@@ -1,0 +1,1 @@
+ALTER TABLE "user_auth_requests" ALTER COLUMN "handle" SET DATA TYPE varchar(32);
