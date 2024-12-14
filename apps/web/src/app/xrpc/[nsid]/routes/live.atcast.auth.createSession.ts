@@ -88,7 +88,8 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
             }),
         }).then((res) => res.json());
 
-        if (!parResponse.request_uri) {
+        if (parResponse.error) {
+            console.log(parResponse);
             return new JSONResponse(
                 {
                     error: "FailedToCreateRequest",
@@ -174,6 +175,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         const tokenBody = await tokenResponse.json();
 
         if ("error" in tokenBody) {
+            console.log(tokenBody);
             return new JSONResponse(
                 {
                     error: "InvalidInput",
