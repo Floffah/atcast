@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { lexicons } from "@atcast/atproto";
 
 import { xrpcRoutes } from "@/app/xrpc/[nsid]/routes";
-import { JSONResponse } from "@/lib/JSONResponse";
+import { JSONResponse } from "@/lib/server/JSONResponse";
 
 const handler = async (req: NextRequest) => {
     const pathname = req.nextUrl.pathname;

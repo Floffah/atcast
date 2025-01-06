@@ -4,7 +4,7 @@ import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { forwardRef } from "react";
 
 import { Icon, IconProps } from "@/components/Icon";
-import { composeStyles } from "@/lib/composeStyles";
+import { composeStyles } from "@/lib/utils/composeStyles";
 import LoadingIcon from "~icons/mdi/loading";
 
 export const Loader = forwardRef<

@@ -39,10 +39,12 @@
             },
             "errors": [
                 {
-                    "name": "InvalidHandle"
+                    "name": "InvalidHandle",
+                    "description": "The provided handle could not be resolved"
                 },
                 {
-                    "name": "FailedToCreateRequest"
+                    "name": "FailedToCreateRequest",
+                    "description": "PDS defined OAuth service rejected the request"
                 }
             ]
         }

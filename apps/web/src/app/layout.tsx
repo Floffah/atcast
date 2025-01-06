@@ -3,7 +3,7 @@ import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PropsWithChildren } from "react";
 
-import { populateMetadata } from "@/lib/populateMetadata";
+import { populateMetadata } from "@/lib/utils/populateMetadata";
 import { XRCPClientProvider } from "@/providers/XRPCClientProvider";
 import { fonts } from "@/styles/fonts.stylex";
 

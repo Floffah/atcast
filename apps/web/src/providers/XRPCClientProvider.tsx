@@ -5,7 +5,7 @@ import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
 import { AtpBaseClient } from "@atcast/atproto";
 
-import { createXRPCClient } from "@/lib/xrpcClient";
+import { createXRPCClient } from "@/lib/api/xrpcClient";
 
 const XRPCClientContext = createContext<AtpBaseClient>(null!);
 

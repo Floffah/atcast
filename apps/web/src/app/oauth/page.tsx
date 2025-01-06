@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import LoginLoading from "@/app/login/oauth/loading";
+import OAuthLoading from "@/app/oauth/loading";
 import { useXRPCClient } from "@/providers/XRPCClientProvider";
 
 export default function LoginPage() {
@@ -53,5 +53,5 @@ export default function LoginPage() {
         router,
     ]);
 
-    return <LoginLoading />;
+    return <OAuthLoading />;
 }

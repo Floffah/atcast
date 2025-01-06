@@ -8,7 +8,7 @@ if (typeof process.env.DATABASE_URL === "string") {
     sql = neon(process.env.DATABASE_URL);
 
     db = drizzle(sql, {
-        // logger: process.env.NODE_ENV !== "production",
+        logger: process.env.NODE_ENV !== "production",
         schema,
     });
 }

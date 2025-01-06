@@ -1,18 +1,19 @@
 import { JoseKey } from "@atproto/jwk-jose";
 import { addDays } from "date-fns";
-import { eq } from "drizzle-orm";
+import { and, eq, lt } from "drizzle-orm";
 import { nanoid } from "nanoid";
+import { after } from "next/server";
 
 import { schemaDict } from "@atcast/atproto";
 import { db, userAuthRequests, userSessions, users } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
-import { JSONResponse } from "@/lib/JSONResponse";
 import { SESSION_TOKEN } from "@/lib/constants";
-import { dpopFetch } from "@/lib/dpopFetch";
-import { didResolver } from "@/lib/identity";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
+import { JSONResponse } from "@/lib/server/JSONResponse";
+import { dpopFetch } from "@/lib/server/dpopFetch";
+import { didResolver } from "@/lib/server/identity";
 
 export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
     typeof schemaDict.LiveAtcastAuthCreateSession
@@ -178,6 +179,26 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         await db
             .delete(userAuthRequests)
             .where(eq(userAuthRequests.id, authRequest.id));
+
+        after(async () => {
+            await db
+                .delete(userSessions)
+                .where(
+                    and(
+                        lt(userSessions.expiresAt, new Date()),
+                        eq(userSessions.userId, user.id),
+                    ),
+                );
+
+            await db
+                .delete(userAuthRequests)
+                .where(
+                    and(
+                        lt(userAuthRequests.expiresAt, new Date()),
+                        eq(userAuthRequests.did, user.did),
+                    ),
+                );
+        });
 
         const response = new JSONResponse({
             token: sessionToken,

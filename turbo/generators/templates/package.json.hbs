@@ -1,7 +1,8 @@
 {
-    "name": "@atcast/models",
+    "name": "@atcast/{{ name }}",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "private": true,
     "exports": {
         ".": {
             "types": "./dist/index.d.mts",
@@ -11,22 +12,15 @@
         }
     },
     "scripts": {
+        "build": "tsup --minify --clean",
         "dev": "tsup --watch",
-        "build": "tsup --minify --clean && bun run scripts/migrate.ts",
-        "migrate": "bunx drizzle-kit generate && bun run scripts/migrate.ts",
         "format": "prettier --write **/*.{ts,js,json} src --ignore-path ../../.gitignore",
         "lint": "tsc --noEmit && bunx eslint --ext .js,.ts src --ignore-path ../../.gitignore"
-    },
-    "dependencies": {
-        "@neondatabase/serverless": "^0.10.4",
-        "drizzle-orm": "^0.38.3",
-        "nanoid": "^5.0.9"
     },
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
-        "@types/bun": "^1.1.15",
-        "drizzle-kit": "^0.30.1",
+        "@types/bun": "^1.1.14",
         "tsup": "^8.3.5",
         "typescript": "^5.7.2"
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import stylex from "@stylexjs/stylex";
+import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import {
     ComponentProps,
     PropsWithChildren,
@@ -10,7 +10,7 @@ import {
 } from "react";
 
 import { FormContext } from "@/components/Form/index";
-import { composeStyles } from "@/lib/composeStyles";
+import { composeStyles } from "@/lib/utils/composeStyles";
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, fontWeights, lineHeights } from "@/styles/fonts.stylex";
 import { sizes } from "@/styles/sizes.stylex";
@@ -23,6 +23,7 @@ export interface FormFieldBaseProps {
     disabled?: boolean;
     orientation?: "horizontal" | "vertical";
     position?: "start" | "end";
+    style?: StyleXStyles;
 }
 
 export const useFormField = <Props extends FormFieldBaseProps>(
@@ -73,8 +74,8 @@ export const useFormField = <Props extends FormFieldBaseProps>(
 };
 
 export type FormFieldProps = Omit<
-    ComponentProps<"div"> & FormFieldBaseProps,
-    "ref" | "children" | "style"
+    Omit<ComponentProps<"div">, "style"> & FormFieldBaseProps,
+    "ref" | "children"
 >;
 
 export function FormField({
@@ -84,6 +85,7 @@ export function FormField({
     warning,
     orientation = "vertical",
     position = "start",
+    style: _,
     className,
     children,
     ...props

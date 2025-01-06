@@ -1,7 +1,7 @@
 import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { ComponentProps, forwardRef } from "react";
 
-import { composeStyles } from "@/lib/composeStyles";
+import { composeStyles } from "@/lib/utils/composeStyles";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
 import { radii } from "@/styles/radii.stylex";
 import { sizes } from "@/styles/sizes.stylex";

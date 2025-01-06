@@ -16,7 +16,7 @@ const formSchema = object({
 });
 type FormValues = InferType<typeof formSchema>;
 
-export default function LoginPage() {
+export default function LoginForm() {
     const router = useRouter();
 
     const xrpc = useXRPCClient();
@@ -26,12 +26,21 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (values: FormValues) => {
-        const res = await xrpc.live.atcast.auth.getAuthUrl({
-            handle: values.handle,
-        });
+        try {
+            const res = await xrpc.live.atcast.auth.getAuthUrl({
+                handle: values.handle,
+            });
 
-        if (res.data?.url) {
-            router.push(res.data.url);
+            if (res.data?.url) {
+                router.push(res.data.url);
+            }
+        } catch (e: any) {
+            if (typeof e.message === "string") {
+                form.setError("handle", {
+                    type: "manual",
+                    message: e.message,
+                });
+            }
         }
     };
 

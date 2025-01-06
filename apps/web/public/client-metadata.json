@@ -6,7 +6,7 @@
     "grant_types": ["authorization_code", "refresh_token"],
     "scope": "atproto transition:generic",
     "response_types": ["code"],
-    "redirect_uris": ["https://atcast.live/login/oauth"],
+    "redirect_uris": ["https://atcast.live/oauth"],
     "dpop_bound_access_tokens": true,
     "token_endpoint_auth_method": "none"
 }

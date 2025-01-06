@@ -4,7 +4,7 @@ import { Loader } from "@/components/Loader";
 import { colours } from "@/styles/colours.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
-export default function LoginLoading() {
+export default function OAuthLoading() {
     return (
         <div {...stylex.props(styles.container)}>
             <Loader {...stylex.props(styles.loader)} />

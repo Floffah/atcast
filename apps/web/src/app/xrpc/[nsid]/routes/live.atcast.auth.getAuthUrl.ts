@@ -6,11 +6,11 @@ import { schemaDict } from "@atcast/atproto";
 import { db, userAuthRequests } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
-import { JSONResponse } from "@/lib/JSONResponse";
-import { dpopFetch } from "@/lib/dpopFetch";
-import { didResolver, handleResolver } from "@/lib/identity";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
+import { JSONResponse } from "@/lib/server/JSONResponse";
+import { dpopFetch } from "@/lib/server/dpopFetch";
+import { handleResolver } from "@/lib/server/identity";
 import clientMetadata from "~public/client-metadata.json";
 
 export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
@@ -22,19 +22,6 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
         const did = await handleResolver.resolve(handle);
 
         if (!did) {
-            return new JSONResponse(
-                {
-                    error: "InvalidHandle",
-                },
-                {
-                    status: 400,
-                },
-            );
-        }
-
-        const didDoc = await didResolver.resolve(did);
-
-        if (!didDoc) {
             return new JSONResponse(
                 {
                     error: "InvalidHandle",
@@ -87,11 +74,10 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
         }).then((res) => res.json());
 
         if (parResponse.error) {
-            console.log(parResponse);
             return new JSONResponse(
                 {
                     error: "FailedToCreateRequest",
-                    error_description: parResponse.error,
+                    message: parResponse.error,
                 },
                 {
                     status: 500,
