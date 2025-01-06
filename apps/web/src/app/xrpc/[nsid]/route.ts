@@ -1,5 +1,6 @@
-import { atprotoLexicons } from "@atcast/atproto";
 import { NextRequest, NextResponse } from "next/server";
+
+import { lexicons } from "@atcast/atproto";
 
 import { xrpcRoutes } from "@/app/xrpc/[nsid]/routes";
 import { JSONResponse } from "@/lib/JSONResponse";
@@ -27,7 +28,7 @@ const handler = async (req: NextRequest) => {
         });
     }
 
-    const lex = atprotoLexicons.get(nsid);
+    const lex = lexicons.get(nsid);
 
     if (!lex) {
         return new NextResponse(null, {
@@ -43,7 +44,7 @@ const handler = async (req: NextRequest) => {
             input = await req.json();
 
             try {
-                input = atprotoLexicons.assertValidXrpcInput(xrpcPath, input);
+                input = lexicons.assertValidXrpcInput(xrpcPath, input);
             } catch (e: any) {
                 return new JSONResponse(
                     {
@@ -67,10 +68,7 @@ const handler = async (req: NextRequest) => {
             }
 
             try {
-                params = atprotoLexicons.assertValidXrpcParams(
-                    xrpcPath,
-                    params,
-                );
+                params = lexicons.assertValidXrpcParams(xrpcPath, params);
             } catch (e: any) {
                 return new JSONResponse(
                     {

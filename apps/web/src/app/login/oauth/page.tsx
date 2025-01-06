@@ -23,11 +23,11 @@ export default function LoginPage() {
     const finishAuthQuery = useQuery({
         queryKey: ["live.atcast.auth.finishSession", searchParams],
         queryFn: async () => {
-            const res = await xrpcClient.live.atcast.auth.createSessionFinish(
-                searchParams.get("iss")!,
-                searchParams.get("state")!,
-                searchParams.get("code")!,
-            );
+            const res = await xrpcClient.live.atcast.auth.createSession({
+                iss: searchParams.get("iss")!,
+                state: searchParams.get("state")!,
+                code: searchParams.get("code")!,
+            });
             return res.data as { token: string };
         },
         enabled: isValidParams,

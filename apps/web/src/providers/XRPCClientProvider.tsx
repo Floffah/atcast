@@ -1,12 +1,13 @@
 "use client";
 
-import { AtClient } from "@atcast/atproto";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
+import { AtpBaseClient } from "@atcast/atproto";
+
 import { createXRPCClient } from "@/lib/xrpcClient";
 
-const XRPCClientContext = createContext<AtClient>(null!);
+const XRPCClientContext = createContext<AtpBaseClient>(null!);
 
 export const useXRPCClient = () => useContext(XRPCClientContext);
 

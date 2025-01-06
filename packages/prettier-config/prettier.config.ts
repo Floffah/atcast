@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from "prettier";
+
+export const withBase = (config: Config) => ({
     trailingComma: "all",
     tabWidth: 4,
     semi: true,
@@ -8,22 +10,15 @@ module.exports = {
     arrowParens: "always",
     endOfLine: "lf",
     embeddedLanguageFormatting: "auto",
-    tailwindConfig: "./apps/web/tailwind.config.js",
-    tailwindFunctions: ["clsx"],
 
-    importOrder: [
-        "reflect-metadata",
-        "<THIRD_PARTY_MODULES>",
-        "^~icons/(.*)$",
-        "^@pulseshelf/(.*)$",
-        "@/(.*)$",
-    ],
+    importOrder: ["<THIRD_PARTY_MODULES>", "^@atcast/(.*)$", "^(@/|~)(.*)$"],
     importOrderSeparation: true,
     importOrderSortSpecifiers: true,
     importOrderGroupNamespaceSpecifiers: true,
 
+    ...config,
     plugins: [
         "@trivago/prettier-plugin-sort-imports",
-        "prettier-plugin-tailwindcss",
+        ...(config.plugins ?? []),
     ],
-};
+});

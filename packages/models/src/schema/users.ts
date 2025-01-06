@@ -13,7 +13,7 @@ export const users = pgTable(
         createdAt: createdAt(),
         lastActiveAt: timestamp("last_active_at").default(sql`now()`),
     },
-    (users) => {
+    (_users) => {
         return {};
     },
 );

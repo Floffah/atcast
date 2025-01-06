@@ -1,23 +1,44 @@
 "use client";
 
-import clsx from "clsx";
+import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { forwardRef } from "react";
 
-import LoadingIcon from "~icons/mdi/loading";
-
 import { Icon, IconProps } from "@/components/Icon";
+import { composeStyles } from "@/lib/composeStyles";
+import LoadingIcon from "~icons/mdi/loading";
 
 export const Loader = forwardRef<
     SVGSVGElement,
     Omit<IconProps, "ref" | "label" | "icon">
->(({ className, ...props }, ref) => {
+>(({ className, style, ...props }, ref) => {
     return (
         <Icon
             label="loading"
             icon={LoadingIcon}
             ref={ref}
-            className={clsx("animate-spin", className)}
+            {...composeStyles(
+                stylex.props(styles.base, style as StyleXStyles),
+                className,
+            )}
             {...props}
         />
     );
+});
+
+export const spin = stylex.keyframes({
+    from: {
+        transform: "rotate(0deg)",
+    },
+    to: {
+        transform: "rotate(360deg)",
+    },
+});
+
+const styles = stylex.create({
+    base: {
+        animationName: spin,
+        animationDuration: "1s",
+        animationTimingFunction: "linear",
+        animationIterationCount: "infinite",
+    },
 });

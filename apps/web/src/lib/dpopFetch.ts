@@ -65,7 +65,7 @@ export async function dpopFetch(
 
     try {
         nonceMap.set(url.origin, nonce);
-    } catch (e) {}
+    } catch (_e) {}
 
     const peekedResponse = await initialResponse.clone().json();
 

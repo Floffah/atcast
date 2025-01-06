@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-export default async function RootPage({ searchParams }) {
+export default async function RootPage({ searchParams }: any) {
     const params = await searchParams;
 
     if ("iss" in params && "state" in params && "code" in params) {

@@ -1,3 +1,3 @@
 
-> [!CAUTION]
-> The files in this directory are read-only, they are generated based on the code in [@atcast/atproto](../packages/atproto)
+> [!INFORMATION]
+> All atcast lexicons are defined here and considered the source of truth. If you make changes to this make sure to run a build so any appropriate codegen steps are run.

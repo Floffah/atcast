@@ -2,6 +2,7 @@ import { LexiconDoc } from "@atproto/lexicon";
 import { NextRequest, NextResponse } from "next/server";
 
 import { LiveAtcastAuthCreateSessionHandler } from "@/app/xrpc/[nsid]/routes/live.atcast.auth.createSession";
+import { LiveAtcastAuthGetAuthUrlHandler } from "@/app/xrpc/[nsid]/routes/live.atcast.auth.getAuthUrl";
 
 export type XRPCHandler<Lex extends LexiconDoc> = Partial<
     Record<
@@ -16,4 +17,5 @@ export type XRPCHandler<Lex extends LexiconDoc> = Partial<
 
 export const xrpcRoutes: Record<string, XRPCHandler<any>> = {
     "live.atcast.auth.createSession": LiveAtcastAuthCreateSessionHandler,
+    "live.atcast.auth.getAuthUrl": LiveAtcastAuthGetAuthUrlHandler,
 };

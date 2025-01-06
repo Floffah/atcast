@@ -1,6 +1,6 @@
 module.exports = {
-    "extends": "next/core-web-vitals",
-    "rules": {
-        "react/display-name": "off"
-    }
-}
+    extends: ["@atcast/eslint-config", "next/core-web-vitals"],
+    rules: {
+        "react/display-name": "off",
+    },
+};

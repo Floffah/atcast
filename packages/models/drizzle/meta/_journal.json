@@ -1,69 +1,69 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1732474423683,
-      "tag": "0000_chunky_nightmare",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1732474595682,
-      "tag": "0001_supreme_morgan_stark",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1734186789450,
-      "tag": "0002_foamy_dexter_bennett",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1734186881392,
-      "tag": "0003_slippery_titania",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1734197013814,
-      "tag": "0004_fine_swarm",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1734197579628,
-      "tag": "0005_living_surge",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1734201743980,
-      "tag": "0006_watery_moonstone",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1734201777381,
-      "tag": "0007_marvelous_frog_thor",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "7",
-      "when": 1734202498672,
-      "tag": "0008_silent_barracuda",
-      "breakpoints": true
-    }
-  ]
+    "version": "7",
+    "dialect": "postgresql",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "7",
+            "when": 1732474423683,
+            "tag": "0000_chunky_nightmare",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "7",
+            "when": 1732474595682,
+            "tag": "0001_supreme_morgan_stark",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "7",
+            "when": 1734186789450,
+            "tag": "0002_foamy_dexter_bennett",
+            "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "7",
+            "when": 1734186881392,
+            "tag": "0003_slippery_titania",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "7",
+            "when": 1734197013814,
+            "tag": "0004_fine_swarm",
+            "breakpoints": true
+        },
+        {
+            "idx": 5,
+            "version": "7",
+            "when": 1734197579628,
+            "tag": "0005_living_surge",
+            "breakpoints": true
+        },
+        {
+            "idx": 6,
+            "version": "7",
+            "when": 1734201743980,
+            "tag": "0006_watery_moonstone",
+            "breakpoints": true
+        },
+        {
+            "idx": 7,
+            "version": "7",
+            "when": 1734201777381,
+            "tag": "0007_marvelous_frog_thor",
+            "breakpoints": true
+        },
+        {
+            "idx": 8,
+            "version": "7",
+            "when": 1734202498672,
+            "tag": "0008_silent_barracuda",
+            "breakpoints": true
+        }
+    ]
 }

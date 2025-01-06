@@ -2,51 +2,7 @@
     "lexicon": 1,
     "id": "live.atcast.auth.createSession",
     "defs": {
-        "start": {
-            "type": "procedure",
-            "description": "Start the authentication flow. Atcast OAuth extension of com.atproto.server.createSession",
-            "input": {
-                "encoding": "application/json",
-                "schema": {
-                    "type": "object",
-                    "required": [
-                        "handle"
-                    ],
-                    "properties": {
-                        "handle": {
-                            "type": "string",
-                            "format": "handle",
-                            "description": "User handle"
-                        }
-                    }
-                }
-            },
-            "output": {
-                "encoding": "application/json",
-                "schema": {
-                    "type": "object",
-                    "required": [
-                        "url"
-                    ],
-                    "properties": {
-                        "url": {
-                            "type": "string",
-                            "format": "uri",
-                            "description": "Authorization URL to send the user to"
-                        }
-                    }
-                }
-            },
-            "errors": [
-                {
-                    "name": "InvalidHandle"
-                },
-                {
-                    "name": "FailedToCreateRequest"
-                }
-            ]
-        },
-        "finish": {
+        "main": {
             "type": "procedure",
             "description": "Finish the authentication flow. Atcast OAuth extension of com.atproto.server.finishSession",
             "input": {

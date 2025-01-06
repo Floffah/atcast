@@ -10,11 +10,10 @@ import {
 import { FormContext } from "@/components/Form/index";
 import { Input } from "@/components/Input";
 
-export interface FormInputProps
-    extends Omit<
-        ComponentProps<typeof Input> & FormFieldBaseProps,
-        "children"
-    > {}
+export type FormInputProps = Omit<
+    ComponentProps<typeof Input> & FormFieldBaseProps,
+    "children"
+>;
 
 export function FormInput({ ...props }: FormInputProps) {
     const { form } = useContext(FormContext);

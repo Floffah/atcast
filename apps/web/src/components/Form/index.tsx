@@ -18,7 +18,6 @@ import {
 
 import { FormButton } from "@/components/Form/FormButton";
 import { FormInput } from "@/components/Form/FormInput";
-import { FormTextArea } from "@/components/Form/FormTextArea";
 
 export interface FormProps {
     form: UseFormReturn<any, any, any>;
@@ -104,6 +103,5 @@ export const Form = Object.assign(
         Root: FormRoot,
         Button: FormButton,
         Input: FormInput,
-        TextArea: FormTextArea,
     },
 );

@@ -1,0 +1,25 @@
+{
+    "name": "@atcast/eslint-config",
+    "private": true,
+    "version": "0.0.0",
+    "main": "index.js",
+    "types": "eslint.config.ts",
+    "scripts": {
+        "format": "prettier --write **/*.{js,json} --ignore-path ../../.gitignore"
+    },
+    "dependencies": {
+        "@atcast/prettier-config": "workspace:*",
+        "@types/bun": "^1.1.14",
+        "@typescript-eslint/eslint-plugin": "^8.19.0",
+        "@typescript-eslint/parser": "^8.19.0",
+        "eslint": "~8.57.1",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.2",
+        "typescript-eslint": "^8.19.0"
+    },
+    "devDependencies": {
+        "@types/eslint-config-prettier": "^6.11.3"
+    }
+}

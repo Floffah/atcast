@@ -1,4 +1,4 @@
-import { AtClient } from "@atcast/atproto";
+import { AtpBaseClient } from "@atcast/atproto";
 
 export function createXRPCClient() {
     let url: URL;
@@ -9,5 +9,5 @@ export function createXRPCClient() {
         url = new URL(process.env.NEXT_PUBLIC_BASE_URL!);
     }
 
-    return new AtClient(url);
+    return new AtpBaseClient(url);
 }

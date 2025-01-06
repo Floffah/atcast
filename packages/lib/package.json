@@ -1,22 +1,26 @@
 {
-  "name": "@atcast/lib",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "default": "./dist/index.js"
+    "name": "@atcast/lib",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.mts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "dev": "tsup --watch",
+        "build": "tsup --minify --clean",
+        "format": "prettier --write **/*.{ts,js,json} src --ignore-path ../../.gitignore",
+        "lint": "tsc --noEmit && eslint --ext .ts,.js src --ignore-path ../../.gitignore"
+    },
+    "devDependencies": {
+        "@atcast/eslint-config": "workspace:*",
+        "@atcast/prettier-config": "workspace:*",
+        "@types/bun": "^1.1.14",
+        "tsup": "^8.3.5",
+        "typescript": "^5.7.2"
     }
-  },
-  "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup --minify --clean"
-  },
-  "devDependencies": {
-    "@types/bun": "^1.1.14",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2"
-  }
 }
