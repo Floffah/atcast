@@ -22,7 +22,8 @@
     },
     "lint": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "setup"
       ],
       "cache": false
     },
