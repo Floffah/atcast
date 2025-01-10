@@ -12,7 +12,7 @@ module.exports = {
         },
         "postcss-preset-env": {},
         cssnano: {
-            preset: "default",
+            preset: ["default", { discardUnused: true }],
         },
     },
 };

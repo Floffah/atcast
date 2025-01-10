@@ -16,4 +16,4 @@ module.exports = {
         type: "commonJS",
         rootDir: projectRoot,
     },
-}
+};

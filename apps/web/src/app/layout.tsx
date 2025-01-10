@@ -6,6 +6,7 @@ import { PropsWithChildren } from "react";
 import { populateMetadata } from "@/lib/utils/populateMetadata";
 import { XRCPClientProvider } from "@/providers/XRPCClientProvider";
 import { fonts } from "@/styles/fonts.stylex";
+import {theme} from "@/styles/theme.stylex";
 
 export const metadata = populateMetadata({
     title: "AtCast",
@@ -46,5 +47,6 @@ const styles = stylex.create({
     },
     body: {
         fontFamily: fonts.sans,
+        backgroundColor: theme.background,
     },
 });
