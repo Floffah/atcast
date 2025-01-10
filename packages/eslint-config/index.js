@@ -36,6 +36,14 @@ module.exports = {
             require("@atcast/prettier-config").withBase({}),
         ],
     },
+    overrides: [
+        {
+            files: ["*.js", "*.js"],
+            rules: {
+                "@typescript-eslint/no-require-imports": "warn",
+            },
+        },
+    ],
     settings: {
         prettier: true,
     },

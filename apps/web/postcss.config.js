@@ -7,21 +7,12 @@ module.exports = {
     plugins: {
         "@stylexswc/postcss-plugin": {
             include: ["src/**/*.{js,jsx,ts,tsx}"],
-            rsOptions: {
-                isDev: process.env.NODE_ENV === "development",
-                genConditionalClasses: true,
-                treeshakeCompensation: true,
-                useRemForFontSize: true,
-                aliases: {
-                    "@/*": [path.join(projectRoot, "src/*")],
-                },
-                unstable_moduleResolution: {
-                    type: "commonJS",
-                    rootDir: projectRoot,
-                },
-            },
-            useCSSLayers: true,
+            rsOptions: require("./stylex.config"),
+            extractCSS: false,
         },
         "postcss-preset-env": {},
+        cssnano: {
+            preset: "default",
+        },
     },
 };
