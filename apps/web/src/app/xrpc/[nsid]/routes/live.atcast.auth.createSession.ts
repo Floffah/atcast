@@ -4,19 +4,22 @@ import { and, eq, lt } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { after } from "next/server";
 
-import { schemaDict } from "@atcast/atproto";
+import { LiveAtcastAuthCreateSession } from "@atcast/atproto";
+import { SESSION_TOKEN } from "@atcast/lib";
 import { db, userAuthRequests, userSessions, users } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
-import { SESSION_TOKEN } from "@/lib/constants";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
+import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
 import { dpopFetch } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
 export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
-    typeof schemaDict.LiveAtcastAuthCreateSession
+    LiveAtcastAuthCreateSession.QueryParams,
+    LiveAtcastAuthCreateSession.InputSchema,
+    LiveAtcastAuthCreateSession.OutputSchema
 > = {
     main: async (_, input) => {
         if (
@@ -25,7 +28,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
             !input.code ||
             input.iss !== "https://bsky.social"
         ) {
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 {
                     error: "InvalidInput",
                 },
@@ -40,7 +43,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         });
 
         if (!authRequest) {
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 {
                     error: "InvalidInput",
                 },
@@ -84,10 +87,10 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
 
         if ("error" in tokenBody) {
             console.log(tokenBody);
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 {
                     error: "InvalidInput",
-                    error_description: tokenBody.error,
+                    message: tokenBody.error,
                 },
                 {
                     status: 400,
@@ -96,19 +99,19 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         }
 
         if (!tokenBody.sub) {
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 { error: "InvalidUser" },
                 {
-                    status: 500,
+                    status: 400,
                 },
             );
         }
 
         if (tokenBody.sub !== authRequest.did) {
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 { error: "InvalidUser" },
                 {
-                    status: 500,
+                    status: 400,
                 },
             );
         }
@@ -122,12 +125,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         }
 
         if (!name) {
-            return new JSONResponse(
-                { error: "InvalidUser" },
-                {
-                    status: 500,
-                },
-            );
+            return new AtprotoErrorResponse({ error: "InvalidUser" });
         }
 
         const sessionToken = nanoid(32);
@@ -158,12 +156,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         }
 
         if (!user) {
-            return new JSONResponse(
-                { error: "Failed to create user" },
-                {
-                    status: 500,
-                },
-            );
+            return new AtprotoErrorResponse({ error: "Failed to create user" });
         }
 
         const expiresAt = addDays(new Date(), 30);

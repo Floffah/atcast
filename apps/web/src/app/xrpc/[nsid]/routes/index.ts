@@ -1,21 +1,26 @@
-import { LexiconDoc } from "@atproto/lexicon";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
+import { ComAtprotoServerGetSessionHandler } from "@/app/xrpc/[nsid]/routes/com.atproto.server.getSession";
 import { LiveAtcastAuthCreateSessionHandler } from "@/app/xrpc/[nsid]/routes/live.atcast.auth.createSession";
 import { LiveAtcastAuthGetAuthUrlHandler } from "@/app/xrpc/[nsid]/routes/live.atcast.auth.getAuthUrl";
+import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
+import { JSONResponse } from "@/lib/server/JSONResponse";
 
-export type XRPCHandler<Lex extends LexiconDoc> = Partial<
-    Record<
-        keyof Lex["defs"],
-        (
-            params: any,
-            input: any,
-            req: NextRequest,
-        ) => NextResponse | Promise<NextResponse>
-    >
->;
+type XRPCResponse<ResponseType> =
+    | JSONResponse<ResponseType>
+    | AtprotoErrorResponse;
 
-export const xrpcRoutes: Record<string, XRPCHandler<any>> = {
+export interface XRPCHandler<Params, Input, Response> {
+    main: (
+        params: Params,
+        input: Input,
+        req: NextRequest,
+    ) => XRPCResponse<Response> | Promise<XRPCResponse<Response>>;
+}
+
+export const xrpcRoutes: Record<string, XRPCHandler<any, any, any>> = {
+    "com.atproto.server.getSession": ComAtprotoServerGetSessionHandler,
+
     "live.atcast.auth.createSession": LiveAtcastAuthCreateSessionHandler,
     "live.atcast.auth.getAuthUrl": LiveAtcastAuthGetAuthUrlHandler,
 };

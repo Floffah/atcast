@@ -16,6 +16,37 @@ export interface DPoPRequestInit extends RequestInit {
     iss?: string;
 }
 
+export function createDpopFetch(baseInit: DPoPRequestInit): typeof fetch {
+    return async function fetchWithDpop(
+        input: RequestInfo | URL,
+        init?: RequestInit,
+    ) {
+        const headers = new Headers(baseInit?.headers ?? {});
+
+        if (init?.headers) {
+            for (const [key, value] of Object.entries(init.headers)) {
+                headers.set(key, value);
+            }
+        }
+
+        if (input instanceof Request && input.headers) {
+            for (const [key, value] of input.headers.entries()) {
+                headers.set(key, value);
+            }
+
+            for (const [key, value] of headers.entries()) {
+                input.headers.set(key, value);
+            }
+        }
+
+        return dpopFetch(input, {
+            ...baseInit,
+            ...init,
+            headers,
+        });
+    };
+}
+
 export async function dpopFetch(
     input: RequestInfo | URL,
     init: DPoPRequestInit,

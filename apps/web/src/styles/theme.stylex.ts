@@ -40,7 +40,9 @@ export const theme = stylex.defineVars({
         [DARK]: colours.red800,
     },
 
-    // element colours
+    // -- element colours --
+
+    // forms
 
     controlBackground: "transparent",
     controlForeground: {

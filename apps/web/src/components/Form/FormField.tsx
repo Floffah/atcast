@@ -85,7 +85,7 @@ export function FormField({
     warning,
     orientation = "vertical",
     position = "start",
-    style: _,
+    style: _, // TODO: add back when no longer causes a build error
     className,
     children,
     ...props

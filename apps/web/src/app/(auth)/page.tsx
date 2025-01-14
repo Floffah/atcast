@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { SESSION_TOKEN } from "@atcast/lib";
+
 import LoginForm from "@/app/(auth)/LoginForm";
-import { SESSION_TOKEN } from "@/lib/constants";
 
 // TOOD: replace landing page with static-only page with no server logic
 

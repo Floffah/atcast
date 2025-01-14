@@ -1,21 +1,16 @@
 import { sql } from "drizzle-orm";
 import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { createdAt } from "@/schema/fields";
+import { createdAt, publicId } from "@/schema/fields";
 
-export const users = pgTable(
-    "users",
-    {
-        id: serial("id").primaryKey(),
-        name: varchar("name", { length: 256 }).notNull().unique(),
-        did: text("did").notNull().unique(),
-        email: varchar("email", { length: 320 }).unique(),
-        createdAt: createdAt(),
-        lastActiveAt: timestamp("last_active_at").default(sql`now()`),
-    },
-    (_users) => {
-        return {};
-    },
-);
+export const users = pgTable("users", {
+    id: serial("id").primaryKey(),
+    publicId: publicId(),
+    name: varchar("name", { length: 256 }).notNull().unique(),
+    did: text("did").notNull().unique(),
+    email: varchar("email", { length: 320 }).unique(),
+    createdAt: createdAt(),
+    lastActiveAt: timestamp("last_active_at").default(sql`now()`),
+});
 
 export type User = typeof users.$inferSelect;

@@ -5,13 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import OAuthLoading from "@/app/(auth)/oauth/loading";
-import { useXRPCClient } from "@/providers/XRPCClientProvider";
+import { useAPI } from "@/providers/APIProvider";
 
 export default function LoginPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const xrpcClient = useXRPCClient();
+    const api = useAPI();
 
     const isValidParams =
         searchParams.has("iss") &&
@@ -23,7 +23,7 @@ export default function LoginPage() {
     const finishAuthQuery = useQuery({
         queryKey: ["live.atcast.auth.finishSession", searchParams],
         queryFn: async () => {
-            const res = await xrpcClient.live.atcast.auth.createSession({
+            const res = await api.client.live.atcast.auth.createSession({
                 iss: searchParams.get("iss")!,
                 state: searchParams.get("state")!,
                 code: searchParams.get("code")!,

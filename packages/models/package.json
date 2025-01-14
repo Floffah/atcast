@@ -13,7 +13,8 @@
     "scripts": {
         "dev": "tsup --watch",
         "build": "tsup --minify --clean && bun run scripts/migrate.ts",
-        "migrate": "bunx drizzle-kit generate && bun run scripts/migrate.ts",
+        "generate": "bunx drizzle-kit generate",
+        "migrate": "bun run scripts/migrate.ts",
         "format": "prettier --write **/*.{ts,js,json} src --ignore-path ../../.gitignore",
         "lint": "tsc --noEmit && bunx eslint --ext .js,.ts src --ignore-path ../../.gitignore"
     },

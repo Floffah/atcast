@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { InferType, object, string } from "yup";
 
 import { Form } from "@/components/Form";
-import { useXRPCClient } from "@/providers/XRPCClientProvider";
+import { useAPI } from "@/providers/APIProvider";
 import { sizes } from "@/styles/sizes.stylex";
 import BlueskyIcon from "~icons/ri/bluesky-fill";
 
@@ -19,7 +19,7 @@ type FormValues = InferType<typeof formSchema>;
 export default function LoginForm() {
     const router = useRouter();
 
-    const xrpc = useXRPCClient();
+    const api = useAPI();
 
     const form = useForm<FormValues>({
         resolver: yupResolver(formSchema),
@@ -27,7 +27,7 @@ export default function LoginForm() {
 
     const onSubmit = async (values: FormValues) => {
         try {
-            const res = await xrpc.live.atcast.auth.getAuthUrl({
+            const res = await api.client.live.atcast.auth.getAuthUrl({
                 handle: values.handle,
             });
 
@@ -65,7 +65,7 @@ const styles = stylex.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: sizes.h_screen,
+        minHeight: sizes.h_screen,
     },
     loginForm: {
         display: "flex",

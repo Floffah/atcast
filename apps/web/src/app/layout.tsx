@@ -4,9 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { PropsWithChildren } from "react";
 
 import { populateMetadata } from "@/lib/utils/populateMetadata";
-import { XRCPClientProvider } from "@/providers/XRPCClientProvider";
+import { XRCPClientProvider } from "@/providers/APIProvider";
 import { fonts } from "@/styles/fonts.stylex";
-import {theme} from "@/styles/theme.stylex";
+import { theme } from "@/styles/theme.stylex";
 
 export const metadata = populateMetadata({
     title: "AtCast",
@@ -48,5 +48,6 @@ const styles = stylex.create({
     body: {
         fontFamily: fonts.sans,
         backgroundColor: theme.background,
+        color: theme.foreground,
     },
 });

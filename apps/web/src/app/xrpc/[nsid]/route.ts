@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { lexicons } from "@atcast/atproto";
 
 import { xrpcRoutes } from "@/app/xrpc/[nsid]/routes";
+import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
 
 const handler = async (req: NextRequest) => {
@@ -15,25 +16,38 @@ const handler = async (req: NextRequest) => {
     const handler = xrpcRoutes[nsid];
 
     if (!handler) {
-        return new NextResponse(null, {
-            status: 404,
-        });
+        return new AtprotoErrorResponse(
+            {
+                error: "InvalidNamespace",
+            },
+            {
+                status: 404,
+            },
+        );
     }
 
-    const procedure = handler[procedureName];
-
-    if (!procedure) {
-        return new NextResponse(null, {
-            status: 404,
-        });
+    if (procedureName !== "main") {
+        return new AtprotoErrorResponse(
+            {
+                error: "InvalidNamespace",
+            },
+            {
+                status: 404,
+            },
+        );
     }
 
     const lex = lexicons.get(nsid);
 
     if (!lex) {
-        return new NextResponse(null, {
-            status: 404,
-        });
+        return new AtprotoErrorResponse(
+            {
+                error: "InvalidNamespace",
+            },
+            {
+                status: 404,
+            },
+        );
     }
 
     let input: any | undefined = undefined;
@@ -86,7 +100,7 @@ const handler = async (req: NextRequest) => {
     let response = new NextResponse("{}");
 
     try {
-        response = await procedure(params, input, req);
+        response = await handler.main(params, input, req);
     } catch (error) {
         console.error(error);
     }

@@ -2,19 +2,22 @@ import { JoseKey } from "@atproto/jwk-jose";
 import { nanoid } from "nanoid";
 import pkceChallenge from "pkce-challenge";
 
-import { schemaDict } from "@atcast/atproto";
+import { LiveAtcastAuthGetAuthUrl } from "@atcast/atproto";
 import { db, userAuthRequests } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
+import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
 import { dpopFetch } from "@/lib/server/dpopFetch";
 import { handleResolver } from "@/lib/server/identity";
 import clientMetadata from "~public/client-metadata.json";
 
 export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
-    typeof schemaDict.LiveAtcastAuthCreateSession
+    LiveAtcastAuthGetAuthUrl.QueryParams,
+    LiveAtcastAuthGetAuthUrl.InputSchema,
+    LiveAtcastAuthGetAuthUrl.OutputSchema
 > = {
     main: async (_, input) => {
         const handle = input.handle;
@@ -22,7 +25,7 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
         const did = await handleResolver.resolve(handle);
 
         if (!did) {
-            return new JSONResponse(
+            return new AtprotoErrorResponse(
                 {
                     error: "InvalidHandle",
                 },
@@ -74,15 +77,10 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
         }).then((res) => res.json());
 
         if (parResponse.error) {
-            return new JSONResponse(
-                {
-                    error: "FailedToCreateRequest",
-                    message: parResponse.error,
-                },
-                {
-                    status: 500,
-                },
-            );
+            return new AtprotoErrorResponse({
+                error: "FailedToCreateRequest",
+                message: parResponse.error,
+            });
         }
 
         const authUrl = new URL(authEndpoint);

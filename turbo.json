@@ -4,7 +4,8 @@
   "tasks": {
     "setup": {},
     "dev": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["setup"]
     },
     "build": {
       "dependsOn": ["setup", "lint", "^build"],

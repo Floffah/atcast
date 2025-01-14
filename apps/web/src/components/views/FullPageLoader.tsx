@@ -16,7 +16,7 @@ const DARK = "@media (prefers-color-scheme: dark)";
 const styles = stylex.create({
     container: {
         display: "flex",
-        height: sizes.h_screen,
+        minHeight: sizes.h_screen,
         width: sizes.w_screen,
         alignItems: "center",
         justifyContent: "center",
