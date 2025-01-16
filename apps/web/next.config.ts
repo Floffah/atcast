@@ -1,8 +1,8 @@
 import stylexConfig from "./stylex.config";
 import stylexPlugin from "@stylexswc/nextjs-plugin";
 import type { NextConfig } from "next";
-import Icons from "unplugin-icons/webpack";
 import ReactComponentName from "react-scan/react-component-name/webpack";
+import Icons from "unplugin-icons/webpack";
 
 const withStylex = stylexPlugin({
     rsOptions: stylexConfig,

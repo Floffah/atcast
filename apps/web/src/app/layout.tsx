@@ -54,10 +54,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <body {...stylex.props(styles.body)}>
                 {process.env.NODE_ENV === "production" && (
                     <Monitoring
-                        apiKey="iThHnX8_ummj_rLbNX31J8zse2lBoedQ" // Safe to expose publically
+                        apiKey={
+                            process.env.NEXT_PUBLIC_REACT_SCAN_API_KEY as string
+                        }
                         url="https://monitoring.react-scan.com/api/v1/ingest"
-                        commit={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA} // optional but recommended
-                        branch={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF} // optional but recommended
+                        commit={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
+                        branch={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF}
                     />
                 )}
                 <QueryClientProvider>
