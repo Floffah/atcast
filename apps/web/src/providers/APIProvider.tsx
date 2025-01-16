@@ -6,7 +6,7 @@ import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { AtpBaseClient, ComAtprotoServerGetSession } from "@atcast/atproto";
 
 import { createBskyClient } from "@/lib/api/bskyClient";
-import { formatQueryKey } from "@/lib/api/queryKeyFactory";
+import { formatQueryKey } from "@/lib/api/formatQueryKey";
 import { createXRPCClient } from "@/lib/api/xrpcClient";
 
 interface APIClientContextValue {

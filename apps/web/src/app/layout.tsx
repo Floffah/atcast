@@ -3,6 +3,7 @@ import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { PropsWithChildren } from "react";
+import { Monitoring } from "react-scan/monitoring/next";
 
 import { populateMetadata } from "@/lib/utils/populateMetadata";
 import { APIProvider } from "@/providers/APIProvider";
@@ -37,12 +38,28 @@ export default function RootLayout({ children }: PropsWithChildren) {
             } as StyleXStyles)}
         >
             <head>
-                <Script
-                    src="https://unpkg.com/react-scan/dist/auto.global.js"
-                    async
-                />
+                {process.env.NODE_ENV === "development" && (
+                    <Script
+                        src="https://unpkg.com/react-scan/dist/auto.global.js"
+                        async
+                    />
+                )}
+                {process.env.NODE_ENV === "production" && (
+                    <Script
+                        src="https://unpkg.com/react-scan/dist/install-hook.global.js"
+                        strategy="beforeInteractive"
+                    />
+                )}
             </head>
             <body {...stylex.props(styles.body)}>
+                {process.env.NODE_ENV === "production" && (
+                    <Monitoring
+                        apiKey="iThHnX8_ummj_rLbNX31J8zse2lBoedQ" // Safe to expose publically
+                        url="https://monitoring.react-scan.com/api/v1/ingest"
+                        commit={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA} // optional but recommended
+                        branch={process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF} // optional but recommended
+                    />
+                )}
                 <QueryClientProvider>
                     <APIProvider>{children}</APIProvider>
                 </QueryClientProvider>
