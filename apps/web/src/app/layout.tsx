@@ -1,10 +1,12 @@
 import "./globals.css";
 import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { PropsWithChildren } from "react";
 
 import { populateMetadata } from "@/lib/utils/populateMetadata";
-import { XRCPClientProvider } from "@/providers/APIProvider";
+import { APIProvider } from "@/providers/APIProvider";
+import { QueryClientProvider } from "@/providers/QueryClientProvider";
 import { fonts } from "@/styles/fonts.stylex";
 import { theme } from "@/styles/theme.stylex";
 
@@ -34,8 +36,16 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 "--font-mono": geistMono.style.fontFamily,
             } as StyleXStyles)}
         >
+            <head>
+                <Script
+                    src="https://unpkg.com/react-scan/dist/auto.global.js"
+                    async
+                />
+            </head>
             <body {...stylex.props(styles.body)}>
-                <XRCPClientProvider>{children}</XRCPClientProvider>
+                <QueryClientProvider>
+                    <APIProvider>{children}</APIProvider>
+                </QueryClientProvider>
             </body>
         </html>
     );

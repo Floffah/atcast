@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import OAuthLoading from "@/app/(auth)/oauth/loading";
+import { FullPageLoader } from "@/components/views/FullPageLoader";
 import { useAPI } from "@/providers/APIProvider";
 
 export default function LoginPage() {
@@ -53,5 +53,5 @@ export default function LoginPage() {
         router,
     ]);
 
-    return <OAuthLoading />;
+    return <FullPageLoader />;
 }

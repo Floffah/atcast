@@ -57,7 +57,7 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
 
         const client_id = getClientId();
 
-        const parResponse = await dpopFetch(parEndpoint, {
+        const parResponse = await dpopFetch(parEndpoint as string, {
             method: "POST",
             key,
             metadata: bskyOauthSpec,

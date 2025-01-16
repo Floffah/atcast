@@ -1,16 +1,19 @@
 import stylex from "@stylexjs/stylex";
 
+import { AuthButton } from "@/components/ui/AuthButton";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 import { theme } from "@/styles/theme.stylex";
 
 export function NavBar() {
     return (
-        <div {...stylex.props(styles.container)}>
+        <nav {...stylex.props(styles.container)}>
             <h1 {...stylex.props(styles.brandName)}>AtCast</h1>
 
-            <div></div>
-        </div>
+            <div {...stylex.props(styles.links)}>
+                <AuthButton />
+            </div>
+        </nav>
     );
 }
 
@@ -26,6 +29,11 @@ const styles = stylex.create({
     brandName: {
         fontSize: fontSizes["2xl"],
         lineHeight: lineHeights["2xl"],
-        color: theme.primaryForeground,
+    },
+    links: {
+        display: "flex",
+        flexDirection: "row",
+        gap: sizes.spacing2,
+        alignItems: "center",
     },
 });

@@ -1,18 +1,15 @@
 "use client";
 
-import {
-    QueryClient,
-    QueryClientProvider,
-    useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
 import { AtpBaseClient, ComAtprotoServerGetSession } from "@atcast/atproto";
 
 import { createBskyClient } from "@/lib/api/bskyClient";
+import { formatQueryKey } from "@/lib/api/queryKeyFactory";
 import { createXRPCClient } from "@/lib/api/xrpcClient";
 
-interface XRPCClientContextValue {
+interface APIClientContextValue {
     client: AtpBaseClient;
     atprotoClient: ReturnType<typeof createBskyClient>;
     session?: ComAtprotoServerGetSession.OutputSchema;
@@ -20,25 +17,22 @@ interface XRPCClientContextValue {
     isAuthenticated: boolean;
 }
 
-const XRPCClientContext = createContext<XRPCClientContextValue>(null!);
+const APIClientContext = createContext<APIClientContextValue>(null!);
 
-export const useAPI = () => useContext(XRPCClientContext);
+export const useAPI = () => useContext(APIClientContext);
 
-export function XRCPClientProvider({ children }: PropsWithChildren) {
+export function APIProvider({ children }: PropsWithChildren) {
     const client = useMemo(() => createXRPCClient(), []);
     const atprotoClient = useMemo(() => createBskyClient(), []);
-    const queryClient = useMemo(() => new QueryClient(), []);
 
-    const sessionQuery = useQuery(
-        {
-            queryKey: ["com.atproto.server.getSession"],
-            queryFn: () => client.com.atproto.server.getSession(),
-        },
-        queryClient,
-    );
+    const sessionQuery = useQuery({
+        queryKey: formatQueryKey("com.atproto.server.getSession"),
+        queryFn: () => client.com.atproto.server.getSession(),
+        staleTime: 1000 * 60 * 5,
+    });
 
     return (
-        <XRPCClientContext.Provider
+        <APIClientContext.Provider
             value={{
                 client,
                 atprotoClient,
@@ -48,9 +42,7 @@ export function XRCPClientProvider({ children }: PropsWithChildren) {
                     sessionQuery.isSuccess && !!sessionQuery.data?.data?.active,
             }}
         >
-            <QueryClientProvider client={queryClient}>
-                {children}
-            </QueryClientProvider>
-        </XRPCClientContext.Provider>
+            {children}
+        </APIClientContext.Provider>
     );
 }

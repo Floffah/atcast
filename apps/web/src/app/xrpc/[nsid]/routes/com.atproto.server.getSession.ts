@@ -97,12 +97,12 @@ export const ComAtprotoServerGetSessionHandler: XRPCHandler<
         return new JSONResponse({
             handle: user.name,
             did: user.did,
-            email: user.email,
+            email: user.email ?? undefined,
             emailConfirmed: false,
-            emailAuthFactor: null,
+            emailAuthFactor: undefined,
             didDoc,
             active: true,
-            status: null,
+            status: undefined,
         });
     },
 };

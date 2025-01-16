@@ -13,9 +13,17 @@ const nextConfig = {
     serverExternalPackages: ["@node-rs/bcrypt"],
     experimental: {
         ppr: true,
+        reactCompiler: true,
+        dynamicIO: true,
+        cacheLife: {
+            wellKnown: {
+                stale: 86400, // 1 day
+                revalidate: 86400, // 1 day
+                expire: 604800, // 7 days
+            },
+        },
     },
     typescript: {
-        // part of lint step, next ignores tsconfig references and breaks trpc
         ignoreBuildErrors: true,
     },
     eslint: {
