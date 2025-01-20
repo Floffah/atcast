@@ -6,7 +6,7 @@ import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { AtpBaseClient, ComAtprotoServerGetSession } from "@atcast/atproto";
 
 import { createBskyClient } from "@/lib/api/bskyClient";
-import { formatQueryKey } from "@/lib/api/formatQueryKey";
+import { formatAPIQueryKey } from "@/lib/api/formatQueryKey";
 import { createXRPCClient } from "@/lib/api/xrpcClient";
 
 interface APIClientContextValue {
@@ -26,9 +26,16 @@ export function APIProvider({ children }: PropsWithChildren) {
     const atprotoClient = useMemo(() => createBskyClient(), []);
 
     const sessionQuery = useQuery({
-        queryKey: formatQueryKey("com.atproto.server.getSession"),
+        queryKey: formatAPIQueryKey("com.atproto.server.getSession"),
         queryFn: () => client.com.atproto.server.getSession(),
         staleTime: 1000 * 60 * 5,
+        retry: (failureCount, error) => {
+            return (
+                error.message !== "Unauthorized" &&
+                error.message !== "InvalidToken" &&
+                failureCount < 3
+            );
+        },
     });
 
     return (

@@ -9,11 +9,7 @@
                 "encoding": "application/json",
                 "schema": {
                     "type": "object",
-                    "required": [
-                        "iss",
-                        "state",
-                        "code"
-                    ],
+                    "required": ["iss", "state", "code"],
                     "properties": {
                         "iss": {
                             "type": "string",
@@ -35,9 +31,7 @@
                 "encoding": "application/json",
                 "schema": {
                     "type": "object",
-                    "required": [
-                        "token"
-                    ],
+                    "required": ["token"],
                     "properties": {
                         "token": {
                             "type": "string",

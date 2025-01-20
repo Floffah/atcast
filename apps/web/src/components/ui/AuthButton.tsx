@@ -1,27 +1,17 @@
-"use client";
+import { Button } from "@/components/Button";
+import { LogoutButton } from "@/components/ui/LogoutButton";
+import { getSessionFromRuntime } from "@/lib/server/data/getSession";
 
-import { Link } from "@/components/Link";
-import { Loader } from "@/components/Loader";
-import { useAPI } from "@/providers/APIProvider";
+export async function AuthButton() {
+    const { session } = await getSessionFromRuntime();
 
-export function AuthButton() {
-    const api = useAPI();
-
-    if (api.isLoading) {
-        return <Loader />;
-    }
-
-    if (api.isAuthenticated) {
-        return (
-            <Link colour="inherit" href="/logout">
-                Logout
-            </Link>
-        );
+    if (session) {
+        return <LogoutButton />;
     } else {
         return (
-            <Link colour="inherit" href="/">
+            <Button size="md" color="secondary" link="/">
                 Login
-            </Link>
+            </Button>
         );
     }
 }

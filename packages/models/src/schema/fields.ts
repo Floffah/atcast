@@ -3,8 +3,8 @@ import { timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { generatePublicId } from "@/lib";
 
-export const publicId = () =>
-    varchar("public_id", { length: 36 })
+export const publicId = (name = "public_id") =>
+    varchar(name, { length: 36 })
         .notNull()
         .unique()
         .$defaultFn(() => generatePublicId());

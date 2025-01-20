@@ -1,13 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import { FullPageLoader } from "@/components/views/FullPageLoader";
+import { formatAPIQueryKey } from "@/lib/api/formatQueryKey";
 import { useAPI } from "@/providers/APIProvider";
 
 export default function LoginPage() {
+    const queryClient = useQueryClient();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -21,13 +23,21 @@ export default function LoginPage() {
         window.location.hostname !== "127.0.0.1";
 
     const finishAuthQuery = useQuery({
-        queryKey: ["live.atcast.auth.finishSession", searchParams],
+        queryKey: formatAPIQueryKey(
+            "live.atcast.auth.createSession",
+            searchParams,
+        ),
         queryFn: async () => {
             const res = await api.client.live.atcast.auth.createSession({
                 iss: searchParams.get("iss")!,
                 state: searchParams.get("state")!,
                 code: searchParams.get("code")!,
             });
+
+            await queryClient.invalidateQueries({
+                queryKey: formatAPIQueryKey("com.atproto.server.getSession"),
+            });
+
             return res.data as { token: string };
         },
         enabled: isValidParams,

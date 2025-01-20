@@ -1,0 +1,1 @@
+ALTER TABLE "user_sessions" ADD COLUMN "access_token_type" varchar(32);

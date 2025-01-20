@@ -18,7 +18,7 @@
         "setup": "bun run scripts/codegen.ts"
     },
     "dependencies": {
-        "@atproto/api": "^0.13.27",
+        "@atproto/api": "^0.13.29",
         "@atproto/identity": "^0.4.5",
         "@atproto/lexicon": "^0.4.5",
         "@atproto/xrpc": "^0.6.6"
@@ -27,7 +27,7 @@
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
         "@atproto/lex-cli": "^0.5.5",
-        "@types/bun": "^1.1.16",
+        "@types/bun": "^1.1.17",
         "tsup": "^8.3.5",
         "typescript": "^5.7.3"
     }

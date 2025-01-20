@@ -1,5 +1,7 @@
 import stylex from "@stylexjs/stylex";
+import { Suspense } from "react";
 
+import { Loader } from "@/components/Loader";
 import { AuthButton } from "@/components/ui/AuthButton";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
 import { sizes } from "@/styles/sizes.stylex";
@@ -11,7 +13,9 @@ export function NavBar() {
             <h1 {...stylex.props(styles.brandName)}>AtCast</h1>
 
             <div {...stylex.props(styles.links)}>
-                <AuthButton />
+                <Suspense fallback={<Loader />}>
+                    <AuthButton />
+                </Suspense>
             </div>
         </nav>
     );

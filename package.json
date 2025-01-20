@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@turbo/gen": "^2.3.3",
-    "npm-check-updates": "^17.1.13",
+    "npm-check-updates": "^17.1.14",
     "turbo": "^2.3.3",
     "turbo-ignore": "^2.3.3"
   },

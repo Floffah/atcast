@@ -1,6 +1,10 @@
+import { sha256 as atprotoSHA256 } from "@atproto/crypto";
 import { JoseKey } from "@atproto/jwk-jose";
 import { OAuthAuthorizationServerMetadata } from "@atproto/oauth-client";
 import { LRUCache } from "lru-cache";
+import { base64url } from "multiformats/bases/base64";
+
+import { UserSession } from "@atcast/models";
 
 const nonceMap = new LRUCache<string, string>({
     allowStale: false,
@@ -10,128 +14,149 @@ const nonceMap = new LRUCache<string, string>({
     max: 100,
 });
 
-export interface DPoPRequestInit extends RequestInit {
-    key: JoseKey;
+export interface CreateDPopFetchOptions {
+    key?: JoseKey;
     metadata: OAuthAuthorizationServerMetadata;
     iss?: string;
+    session?: UserSession;
 }
 
-export function createDpopFetch(baseInit: DPoPRequestInit): typeof fetch {
+export function createDpopFetch(options: CreateDPopFetchOptions): typeof fetch {
+    if (!options.key && !options.session) {
+        throw new Error("Either key or session must be provided");
+    }
+
     return async function fetchWithDpop(
         input: RequestInfo | URL,
         init?: RequestInit,
     ) {
-        const headers = new Headers(baseInit?.headers ?? {});
+        const request =
+            input instanceof Request ? input : new Request(input, init);
 
-        if (init?.headers) {
-            for (const [key, value] of Object.entries(init.headers)) {
-                headers.set(key, value);
+        const key =
+            options.key ?? (await JoseKey.fromJWK(options.session!.jwk as any));
+
+        let alg = key.algorithms[0];
+
+        if (options.metadata.dpop_signing_alg_values_supported) {
+            const possibleAlg =
+                options.metadata.dpop_signing_alg_values_supported.find((alg) =>
+                    key.algorithms.includes(alg),
+                );
+            if (possibleAlg) {
+                alg = possibleAlg;
             }
         }
 
-        if (input instanceof Request && input.headers) {
-            for (const [key, value] of input.headers.entries()) {
-                headers.set(key, value);
-            }
+        let ath: string | undefined = undefined;
 
-            for (const [key, value] of headers.entries()) {
-                input.headers.set(key, value);
-            }
+        if (options.session) {
+            ath = await sha256(options.session.accessToken);
+
+            request.headers.set(
+                "Authorization",
+                `DPoP ${options.session.accessToken}`,
+            );
         }
 
-        return dpopFetch(input, {
-            ...baseInit,
-            ...init,
-            headers,
-        });
+        const url = new URL(request.url);
+
+        const initialNonce = nonceMap.get(url.origin);
+
+        const jwt = await createJWK(
+            alg,
+            key,
+            options,
+            request,
+            initialNonce,
+            ath,
+        );
+
+        request.headers.set("DPoP", jwt);
+
+        const initialResponse = await fetch(request);
+
+        const nonce = initialResponse.headers.get("dpop-nonce");
+        if (!nonce || nonce === initialNonce) {
+            return initialResponse;
+        }
+
+        try {
+            nonceMap.set(url.origin, nonce);
+        } catch (_e) {}
+
+        const peekedResponse = await initialResponse.clone().json();
+
+        if (peekedResponse.error !== "use_dpop_nonce") {
+            return initialResponse;
+        }
+
+        // Cannot retry consumed requests, its up to the user to handle this
+        if (input === request) {
+            return initialResponse;
+        }
+
+        if (ReadableStream && init?.body instanceof ReadableStream) {
+            return initialResponse;
+        }
+
+        await initialResponse.body?.cancel();
+
+        const retryJwt = await createJWK(
+            alg,
+            key,
+            options,
+            request,
+            nonce,
+            ath,
+        );
+
+        const retryRequest = new Request(request, init);
+        retryRequest.headers.set("DPoP", retryJwt);
+
+        return await fetch(retryRequest);
     };
 }
 
-export async function dpopFetch(
-    input: RequestInfo | URL,
-    init: DPoPRequestInit,
+async function createJWK(
+    alg: string,
+    key: JoseKey,
+    dPoPOptions: CreateDPopFetchOptions,
+    request: Request,
+    nonce?: string,
+    ath?: string,
 ) {
-    const request = input instanceof Request ? input : new Request(input, init);
-
-    let alg = init.key.algorithms[0];
-
-    if (init.metadata.dpop_signing_alg_values_supported) {
-        const possibleAlg =
-            init.metadata.dpop_signing_alg_values_supported.find((alg) =>
-                init.key.algorithms.includes(alg),
-            );
-        if (possibleAlg) {
-            alg = possibleAlg;
-        }
-    }
-
-    const url = new URL(request.url);
-
-    const initialNonce = nonceMap.get(url.origin);
-
-    const jwt = await init.key.createJwt(
+    return await key.createJwt(
         {
             alg,
             typ: "dpop+jwt",
-            jwk: init.key.bareJwk,
+            jwk: key.bareJwk,
         },
         {
-            iss: init.iss ?? init.metadata.issuer,
-            iat: Math.floor(Date.now() / 1e3),
-            jti: Math.random().toString(36).slice(2), // https://github.com/bluesky-social/atproto/blob/main/packages/oauth/oauth-client/src/fetch-dpop.ts#L170-L171
-            htm: init.method,
-            htu: request.url,
-            nonce: initialNonce,
-        },
-    );
-
-    request.headers.set("DPoP", jwt);
-
-    const initialResponse = await fetch(request);
-
-    const nonce = initialResponse.headers.get("DPoP-Nonce");
-    if (!nonce || nonce === initialNonce) {
-        return initialResponse;
-    }
-
-    try {
-        nonceMap.set(url.origin, nonce);
-    } catch (_e) {}
-
-    const peekedResponse = await initialResponse.clone().json();
-
-    if (peekedResponse.error !== "use_dpop_nonce") {
-        return initialResponse;
-    }
-
-    if (input === request) {
-        return initialResponse;
-    }
-
-    if (ReadableStream && init?.body instanceof ReadableStream) {
-        return initialResponse;
-    }
-
-    await initialResponse.body?.cancel();
-
-    const retryJwt = await init.key.createJwt(
-        {
-            alg,
-            typ: "dpop+jwt",
-            jwk: init.key.bareJwk,
-        },
-        {
-            iss: init.iss ?? init.metadata.issuer,
+            iss: dPoPOptions.iss ?? dPoPOptions.metadata.issuer,
             iat: Math.floor(Date.now() / 1e3),
             jti: Math.random().toString(36).slice(2),
-            htm: init.method,
+            htm: request.method,
             htu: request.url,
             nonce,
+            ath: ath?.toString(),
         },
     );
+}
 
-    const retryRequest = new Request(request, init);
-    retryRequest.headers.set("DPoP", retryJwt);
+async function sha256(input: string): Promise<string> {
+    let bytes: Uint8Array<ArrayBufferLike>;
 
-    return await fetch(retryRequest);
+    if (globalThis.crypto?.subtle) {
+        const inputBytes = new TextEncoder().encode(input);
+        const digest = await globalThis.crypto.subtle.digest(
+            "SHA-256",
+            inputBytes,
+        );
+        bytes = new Uint8Array(digest);
+    } else {
+        bytes = await atprotoSHA256(input);
+    }
+
+    return base64url.baseEncode(bytes);
 }

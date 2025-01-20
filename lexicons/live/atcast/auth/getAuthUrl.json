@@ -9,9 +9,7 @@
                 "encoding": "application/json",
                 "schema": {
                     "type": "object",
-                    "required": [
-                        "handle"
-                    ],
+                    "required": ["handle"],
                     "properties": {
                         "handle": {
                             "type": "string",
@@ -25,9 +23,7 @@
                 "encoding": "application/json",
                 "schema": {
                     "type": "object",
-                    "required": [
-                        "url"
-                    ],
+                    "required": ["url"],
                     "properties": {
                         "url": {
                             "type": "string",

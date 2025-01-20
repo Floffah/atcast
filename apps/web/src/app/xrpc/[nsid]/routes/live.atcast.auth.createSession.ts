@@ -1,5 +1,5 @@
 import { JoseKey } from "@atproto/jwk-jose";
-import { addDays } from "date-fns";
+import { addDays, addSeconds } from "date-fns";
 import { and, eq, lt } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { after } from "next/server";
@@ -13,7 +13,7 @@ import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
-import { dpopFetch } from "@/lib/server/dpopFetch";
+import { createDpopFetch } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
 export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
@@ -71,11 +71,15 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
 
         let tokenResponse: Response;
         if (authRequest.jwk) {
-            tokenResponse = await dpopFetch(bskyOauthSpec.token_endpoint, {
-                ...fetchInit,
+            const dpopFetch = createDpopFetch({
                 key: await JoseKey.fromJWK(authRequest.jwk as any),
                 metadata: bskyOauthSpec,
             });
+
+            tokenResponse = await dpopFetch(
+                bskyOauthSpec.token_endpoint,
+                fetchInit,
+            );
         } else {
             tokenResponse = await fetch(
                 bskyOauthSpec.token_endpoint,
@@ -160,10 +164,19 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         }
 
         const expiresAt = addDays(new Date(), 30);
+
+        let accessTokenExpiresAt: Date | null = null;
+
+        if (tokenBody.expires_in) {
+            accessTokenExpiresAt = addSeconds(new Date(), tokenBody.expires_in);
+        }
+
         await db.insert(userSessions).values({
             userId: user.id,
             token: sessionToken,
             accessToken: tokenBody.access_token,
+            accessTokenExpiresAt,
+            accessTokenType: tokenBody.token_type,
             refreshToken: tokenBody.refresh_token,
             expiresAt,
             jwk: authRequest.jwk,

@@ -10,7 +10,7 @@ import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
-import { dpopFetch } from "@/lib/server/dpopFetch";
+import { createDpopFetch } from "@/lib/server/dpopFetch";
 import { handleResolver } from "@/lib/server/identity";
 import clientMetadata from "~public/client-metadata.json";
 
@@ -57,10 +57,13 @@ export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
 
         const client_id = getClientId();
 
-        const parResponse = await dpopFetch(parEndpoint as string, {
-            method: "POST",
+        const dpopFetch = createDpopFetch({
             key,
             metadata: bskyOauthSpec,
+        });
+
+        const parResponse = await dpopFetch(parEndpoint as string, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },

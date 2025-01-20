@@ -19,6 +19,8 @@ export const userSessions = pgTable("user_sessions", {
         .notNull(),
     token: varchar("token", { length: 256 }).notNull().unique(),
     accessToken: text("access_token").notNull(),
+    accessTokenExpiresAt: timestamp("access_token_expires_at"),
+    accessTokenType: varchar("access_token_type", { length: 32 }),
     refreshToken: text("refresh_token"),
     jwk: json("jwk"),
     expiresAt: timestamp("expires_at").notNull(),

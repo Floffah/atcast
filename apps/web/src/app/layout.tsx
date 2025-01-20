@@ -8,7 +8,7 @@ import { Monitoring } from "react-scan/monitoring/next";
 import { populateMetadata } from "@/lib/utils/populateMetadata";
 import { APIProvider } from "@/providers/APIProvider";
 import { QueryClientProvider } from "@/providers/QueryClientProvider";
-import { fonts } from "@/styles/fonts.stylex";
+import { fontSizes, fonts, lineHeights } from "@/styles/fonts.stylex";
 import { theme } from "@/styles/theme.stylex";
 
 export const metadata = populateMetadata({
@@ -42,6 +42,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                     <Script
                         src="https://unpkg.com/react-scan/dist/auto.global.js"
                         async
+                        strategy="beforeInteractive"
                     />
                 )}
                 {process.env.NODE_ENV === "production" && (
@@ -75,8 +76,10 @@ const styles = stylex.create({
         colorScheme: "dark light",
     },
     body: {
-        fontFamily: fonts.sans,
         backgroundColor: theme.background,
         color: theme.foreground,
+        fontFamily: fonts.sans,
+        fontSize: fontSizes.base,
+        lineHeight: lineHeights.base,
     },
 });
