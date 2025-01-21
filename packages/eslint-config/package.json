@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "@atcast/prettier-config": "workspace:*",
-        "@types/bun": "^1.1.17",
+        "@types/bun": "^1.1.18",
         "@typescript-eslint/eslint-plugin": "^8.21.0",
         "@typescript-eslint/parser": "^8.21.0",
         "eslint": "~8.57.1",

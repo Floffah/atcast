@@ -9,7 +9,9 @@ export const publicId = (name = "public_id") =>
         .unique()
         .$defaultFn(() => generatePublicId());
 
-export const createdAt = () =>
-    timestamp("created_at")
-        .notNull()
-        .default(sql`now()`);
+export const createdAt = () => timestamp("created_at").notNull().defaultNow();
+
+export const updatedAt = () =>
+    timestamp("updated_at")
+        .defaultNow()
+        .$onUpdate(() => sql`CURRENT_TIMESTAMP`);

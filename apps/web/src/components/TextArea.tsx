@@ -1,5 +1,6 @@
-import stylex, { StyleXStyles } from "@stylexjs/stylex";
+import stylex from "@stylexjs/stylex";
 import { ComponentProps, forwardRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { composeStyles } from "@/lib/utils/composeStyles";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
@@ -7,29 +8,29 @@ import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 import { theme } from "@/styles/theme.stylex";
 
-export interface InputProps extends Omit<ComponentProps<"input">, "style"> {
+export interface TextAreaProps
+    extends Omit<ComponentProps<typeof TextareaAutosize>, "ref"> {
     error?: boolean;
-    style?: StyleXStyles;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ({ className, style, error, disabled, ...props }, ref) => {
         return (
-            <input
+            <TextareaAutosize
                 {...props}
                 ref={ref}
                 disabled={disabled}
                 {...composeStyles(
                     stylex.props(
-                        style,
                         styles.base,
                         error && !disabled && styles.error,
                         disabled && styles.disabled,
                         error && disabled && styles.disabledError,
                     ),
                     className,
+                    style,
                 )}
-            ></input>
+            />
         );
     },
 );
@@ -38,7 +39,7 @@ const styles = stylex.create({
     base: {
         transitionProperty: "color, background-color, border-color",
         transitionDuration: "150ms",
-        backgroundColor: theme.controlBackground,
+        background: theme.controlBackground,
         borderRadius: rounded.lg,
         border: {
             default: theme.controlBorder,

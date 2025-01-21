@@ -2,7 +2,7 @@ import stylex from "@stylexjs/stylex";
 
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
-import { radii } from "@/styles/radii.stylex";
+import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
 export function MyShowsLoading() {
@@ -66,7 +66,7 @@ const styles = stylex.create({
         animation: `${pulseAnimation} 4s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
         width: "100%",
         height: sizes.spacing40,
-        borderRadius: radii.lg,
+        borderRadius: rounded.lg,
         flexGrow: 1,
     },
 

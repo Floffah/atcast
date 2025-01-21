@@ -17,6 +17,7 @@ export const userSessions = pgTable("user_sessions", {
             onDelete: "cascade",
         })
         .notNull(),
+
     token: varchar("token", { length: 256 }).notNull().unique(),
     accessToken: text("access_token").notNull(),
     accessTokenExpiresAt: timestamp("access_token_expires_at"),

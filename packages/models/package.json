@@ -26,7 +26,7 @@
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
-        "@types/bun": "^1.1.17",
+        "@types/bun": "^1.1.18",
         "drizzle-kit": "^0.30.2",
         "tsup": "^8.3.5",
         "typescript": "^5.7.3"

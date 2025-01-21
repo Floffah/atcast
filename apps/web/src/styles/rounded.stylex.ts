@@ -1,6 +1,6 @@
 import stylex from "@stylexjs/stylex";
 
-export const radii = stylex.defineVars({
+export const rounded = stylex.defineVars({
     sm: "0.125rem",
     base: "0.25rem",
     md: "0.375rem",

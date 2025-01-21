@@ -1,0 +1,38 @@
+{
+    "lexicon": 1,
+    "id": "live.atcast.podcast.show",
+    "defs": {
+        "main": {
+            "type": "record",
+            "description": "Record containing a AtCast podcast show.",
+            "key": "any",
+            "record": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the show.",
+                        "maxLength": 256,
+                        "minLength": 5
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of the show.",
+                        "maxLength": 1024
+                    },
+                    "lastEpisodePublishedAt": {
+                        "type": "string",
+                        "description": "The time of the last published episode.",
+                        "format": "datetime"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "The time of the show creation.",
+                        "format": "datetime"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,9 +1,10 @@
 import stylex from "@stylexjs/stylex";
+import Link from "next/link";
 
 import { Button } from "@/components/Button";
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
-import { radii } from "@/styles/radii.stylex";
+import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
 export async function MyShowsSection() {
@@ -13,8 +14,8 @@ export async function MyShowsSection() {
 
             <div {...stylex.props(styles.noPodcastsCTA)}>
                 <p>Publish your first podcast and become a creator</p>
-                <Button size="md" color="primary" link="/show/create">
-                    Get Started
+                <Button size="md" color="primary" asChild>
+                    <Link href="/show/create">Get Started</Link>
                 </Button>
             </div>
         </section>
@@ -42,7 +43,7 @@ const styles = stylex.create({
         justifyContent: "center",
         alignItems: "center",
         height: sizes.spacing40,
-        borderRadius: radii.lg,
+        borderRadius: rounded.lg,
         backgroundColor: {
             default: colours.gray100,
             [DARK]: colours.gray900,

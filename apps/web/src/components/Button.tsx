@@ -1,7 +1,7 @@
 "use client";
 
 import { Slot } from "@radix-ui/react-slot";
-import stylex, { StyleXStyles } from "@stylexjs/stylex";
+import stylex from "@stylexjs/stylex";
 import { useRouter } from "next/navigation";
 import {
     ComponentProps,
@@ -19,19 +19,21 @@ import { Icon, IconProps } from "@/components/Icon";
 import { Loader } from "@/components/Loader";
 import { composeStyles } from "@/lib/utils/composeStyles";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
-import { radii } from "@/styles/radii.stylex";
+import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 import { theme } from "@/styles/theme.stylex";
 
-export interface ButtonProps extends Omit<ComponentProps<"button">, "style"> {
+export interface ButtonProps extends ComponentProps<"button"> {
     asChild?: boolean;
     size: "sm" | "md";
     color: "primary" | "secondary" | "success" | "danger";
     loading?: boolean;
     icon?: IconProps["icon"];
     iconLabel?: string;
+    /**
+     * @deprecated Use asChild with an anchor or Link component instead
+     */
     link?: string;
-    style?: StyleXStyles;
 }
 
 const ButtonContext = createContext<ButtonProps>(null!);
@@ -122,7 +124,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     ref={ref as any}
                     {...composeStyles(
                         stylex.props(
-                            style,
                             // base states
                             styles.base,
                             disabled && styles.disabled,
@@ -136,6 +137,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                             color === "danger" && styles.danger,
                         ),
                         className,
+                        style,
                     )}
                     onClick={async (e) => {
                         setLoading(true);
@@ -189,13 +191,13 @@ const styles = stylex.create({
         padding: `${sizes.spacing1} ${sizes.spacing2}`,
         fontSize: fontSizes.sm,
         lineHeight: lineHeights.sm,
-        borderRadius: radii.lg,
+        borderRadius: rounded.lg,
     },
     sizeMd: {
         padding: `${sizes.spacing1_5} ${sizes.spacing3}`,
         fontSize: fontSizes.base,
         lineHeight: lineHeights.base,
-        borderRadius: radii.lg,
+        borderRadius: rounded.lg,
     },
 
     // colours

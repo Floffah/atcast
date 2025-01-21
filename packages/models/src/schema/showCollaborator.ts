@@ -1,5 +1,6 @@
 import { integer, pgTable, primaryKey } from "drizzle-orm/pg-core";
 
+import { showCollaboratorTypeEnum } from "@/schema/enums";
 import { shows } from "@/schema/shows";
 import { users } from "@/schema/users";
 
@@ -16,6 +17,8 @@ export const showCollaborators = pgTable(
             .references(() => shows.id, {
                 onDelete: "cascade",
             }),
+
+        type: showCollaboratorTypeEnum("type").notNull(),
     },
     (showCollaborators) => [
         primaryKey({

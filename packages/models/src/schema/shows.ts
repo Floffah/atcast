@@ -1,6 +1,6 @@
 import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
-import { createdAt, publicId } from "@/schema/fields";
+import { createdAt, publicId, updatedAt } from "@/schema/fields";
 
 export const shows = pgTable("shows", {
     id: serial("id").primaryKey(),
@@ -10,6 +10,7 @@ export const shows = pgTable("shows", {
     name: varchar("name", { length: 256 }).notNull(),
     description: varchar("description", { length: 1024 }),
 
-    lastEpisode: timestamp("last_episode"),
+    lastEpisodePublishedAt: timestamp("last_episode"),
     createdAt: createdAt(),
+    updatedAt: updatedAt(),
 });

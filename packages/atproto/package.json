@@ -26,8 +26,8 @@
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
-        "@atproto/lex-cli": "^0.5.5",
-        "@types/bun": "^1.1.17",
+        "@atproto/lex-cli": "^0.5.6",
+        "@types/bun": "^1.1.18",
         "tsup": "^8.3.5",
         "typescript": "^5.7.3"
     }
