@@ -2,9 +2,10 @@ import "./globals.css";
 import stylex, { StyleXStyles } from "@stylexjs/stylex";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
 import { Monitoring } from "react-scan/monitoring/next";
 
+import { DevDisclaimerBanner } from "@/components/ui/DevDisclaimerBanner";
 import { populateMetadata } from "@/lib/utils/populateMetadata";
 import { APIProvider } from "@/providers/APIProvider";
 import { QueryClientProvider } from "@/providers/QueryClientProvider";
@@ -64,7 +65,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
                     />
                 )}
                 <QueryClientProvider>
-                    <APIProvider>{children}</APIProvider>
+                    <APIProvider>
+                        {children}
+
+                        <Suspense>
+                            <DevDisclaimerBanner />
+                        </Suspense>
+                    </APIProvider>
                 </QueryClientProvider>
             </body>
         </html>

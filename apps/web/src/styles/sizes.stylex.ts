@@ -14,6 +14,7 @@ export const sizes = stylex.defineVars({
     spacing4: "1rem",
     spacing5: "1.25rem",
     spacing6: "1.5rem",
+    spacing10: "2.5rem",
 
     spacing40: "10rem",
 });

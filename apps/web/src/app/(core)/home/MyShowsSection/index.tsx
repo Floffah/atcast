@@ -5,7 +5,7 @@ import Link from "next/link";
 import { LiveAtcastPodcastShow, RecordNSIDs } from "@atcast/atproto";
 
 import { Button } from "@/components/Button";
-import { ShowCard } from "@/components/ShowCard";
+import { ShowCard } from "@/components/ui/ShowCard";
 import { createPdsClient } from "@/lib/api/pdsClient";
 import { getSessionFromRuntime } from "@/lib/server/data/getSession";
 import { colours } from "@/styles/colours.stylex";
@@ -35,8 +35,6 @@ export async function MyShowsSection() {
         .records as (ComAtprotoRepoListRecords.Record & {
         value: LiveAtcastPodcastShow.Record;
     })[];
-
-    console.log(recordsResponse?.data.records);
 
     return (
         <section {...stylex.props(styles.container)}>
