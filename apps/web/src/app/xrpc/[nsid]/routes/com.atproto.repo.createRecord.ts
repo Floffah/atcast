@@ -1,9 +1,9 @@
-import { recordHandlers } from "../recordHandlers";
+import { recordHandlers } from "./recordHandlers";
 
 import { ComAtprotoRepoCreateRecord, lexicons } from "@atcast/atproto";
 import { db } from "@atcast/models";
 
-import { XRPCHandler } from "@/app/xrpc/[nsid]/routes";
+import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { createPdsClient } from "@/lib/api/pdsClient";
 import { retry } from "@/lib/api/retry";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";

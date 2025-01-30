@@ -13,7 +13,7 @@ import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
-import { createDpopFetch } from "@/lib/server/dpopFetch";
+import { createDPoPFetch } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
 export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
@@ -71,7 +71,7 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
 
         let tokenResponse: Response;
         if (authRequest.jwk) {
-            const dpopFetch = createDpopFetch({
+            const dpopFetch = createDPoPFetch({
                 key: await JoseKey.fromJWK(authRequest.jwk as any),
                 metadata: bskyOauthSpec,
             });

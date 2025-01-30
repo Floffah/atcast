@@ -13,7 +13,7 @@ import { db, userSessions } from "@atcast/models";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { getClientId } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
-import { createDpopFetch } from "@/lib/server/dpopFetch";
+import { createDPoPFetch } from "@/lib/server/dpopFetch";
 
 export function getSessionFromRequest(req: NextRequest) {
     return getSession(req.headers, req.cookies);
@@ -106,6 +106,10 @@ export async function getSession(
         };
     }
 
+    const user = await db.query.users.findFirst({
+        where: (users, { eq }) => eq(users.id, session!.userId),
+    });
+
     if (
         session.accessTokenExpiresAt &&
         session.accessTokenExpiresAt < new Date()
@@ -113,7 +117,7 @@ export async function getSession(
         const key = await JoseKey.fromJWK(session.jwk as any);
         const bskyOauthSpec = await getBskyAuthInfo();
 
-        const dpopFetch = createDpopFetch({
+        const dpopFetch = createDPoPFetch({
             key,
             metadata: bskyOauthSpec,
         });
@@ -166,5 +170,6 @@ export async function getSession(
 
     return {
         session,
+        user: user!,
     };
 }

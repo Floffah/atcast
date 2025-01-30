@@ -54,7 +54,7 @@ export default function LoginPage() {
         }
 
         if (finishAuthQuery.isSuccess && finishAuthQuery.data) {
-            router.push("/");
+            router.push("/home");
         }
     }, [
         finishAuthQuery.data,

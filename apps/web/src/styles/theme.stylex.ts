@@ -8,7 +8,7 @@ const DARK = "@media (prefers-color-scheme: dark)";
 // We cannot import them as stylex requires literal values
 export const theme = stylex.defineVars({
     foreground: {
-        default: colours.gray700,
+        default: colours.gray800,
         [DARK]: "white",
     },
     background: {

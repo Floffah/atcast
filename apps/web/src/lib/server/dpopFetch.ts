@@ -21,12 +21,12 @@ export interface CreateDPopFetchOptions {
     session?: UserSession;
 }
 
-export function createDpopFetch(options: CreateDPopFetchOptions): typeof fetch {
+export function createDPoPFetch(options: CreateDPopFetchOptions): typeof fetch {
     if (!options.key && !options.session) {
         throw new Error("Either key or session must be provided");
     }
 
-    return async function fetchWithDpop(
+    return async function fetchWithDPoP(
         input: RequestInfo | URL,
         init?: RequestInit,
     ) {

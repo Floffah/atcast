@@ -4,7 +4,7 @@ import { createBskyClient } from "@/lib/api/bskyClient";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import {
     CreateDPopFetchOptions,
-    createDpopFetch,
+    createDPoPFetch,
 } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
@@ -20,7 +20,7 @@ export async function createPdsClient(
 
     return createBskyClient({
         service: atprotoData.pds,
-        fetch: createDpopFetch({
+        fetch: createDPoPFetch({
             ...options,
             metadata,
         }),
