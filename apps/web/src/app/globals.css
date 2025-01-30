@@ -16,4 +16,14 @@ a {
     text-decoration: none;
 }
 
+*,
+::backdrop,
+:after,
+:before {
+    box-sizing: border-box;
+    border: 0 solid;
+    margin: 0;
+    padding: 0;
+}
+
 @stylex;

@@ -14,24 +14,29 @@ export function DevDisclaimerBannerInner() {
     const [hidden, setHidden] = useState(false);
 
     return (
-        <div {...stylex.props(styles.container, hidden && styles.hidden)}>
-            <p>
-                AtCast is a proof-of-concept and is in heavy development. I do
-                not take responsibility for damages or data loss.{" "}
-                <Link colour="link" href="https://github.com/Floffah/atcast">
-                    See it on GitHub
-                </Link>
-            </p>
+        <div {...stylex.props(styles.container)}>
+            <div {...stylex.props(styles.banner, hidden && styles.hidden)}>
+                <p {...stylex.props(styles.message)}>
+                    AtCast is a proof-of-concept and is in heavy development. I
+                    do not take responsibility for damages or data loss.{" "}
+                    <Link
+                        colour="link"
+                        href="https://github.com/Floffah/atcast"
+                    >
+                        See it on GitHub
+                    </Link>
+                </p>
 
-            <CloseIcon
-                {...stylex.props(styles.closeIcon)}
-                onClick={() => {
-                    setHidden(true);
+                <CloseIcon
+                    {...stylex.props(styles.closeIcon)}
+                    onClick={() => {
+                        setHidden(true);
 
-                    document.cookie =
-                        "atcast-dev-disclaimer-dismissed=true; path=/; max-age=31536000";
-                }}
-            />
+                        document.cookie =
+                            "atcast-dev-disclaimer-dismissed=true; path=/; max-age=31536000";
+                    }}
+                />
+            </div>
         </div>
     );
 }
@@ -40,6 +45,14 @@ const DARK = "@media (prefers-color-scheme: dark)";
 
 const styles = stylex.create({
     container: {
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        padding: sizes.spacing6,
+        width: "100%",
+    },
+
+    banner: {
         display: "flex",
         alignItems: "center",
         padding: sizes.spacing4,
@@ -47,17 +60,15 @@ const styles = stylex.create({
         borderRadius: rounded.lg,
         border: theme.controlBorder,
         backgroundColor: theme.controlBackground,
-        maxWidth: "100%",
-        boxSizing: "border-box",
-
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        margin: sizes.spacing6,
+        width: "100%",
     },
 
     hidden: {
         display: "none",
+    },
+
+    message: {
+        flex: 1,
     },
 
     closeIcon: {
@@ -74,5 +85,6 @@ const styles = stylex.create({
             default: colours.gray500,
             [DARK]: colours.gray600,
         },
+        flexShrink: 0,
     },
 });
