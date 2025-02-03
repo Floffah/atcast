@@ -97,7 +97,7 @@ export const ComAtprotoRepoCreateRecordHandler: XRPCHandler<
         );
 
         return new JSONResponse(response.data, {
-            headers: response.headers,
+            headers: response.headers as HeadersInit,
         });
     },
 };
