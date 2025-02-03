@@ -8,7 +8,7 @@ import {
 } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
-export async function createPdsClient(
+export async function createPDSClient(
     options: Omit<CreateDPopFetchOptions, "metadata"> & {
         did: string;
         metadata?: OAuthAuthorizationServerMetadata;

@@ -1,10 +1,9 @@
 import { recordHandlers } from "./recordHandlers";
 
 import { ComAtprotoRepoCreateRecord, lexicons } from "@atcast/atproto";
-import { db } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
-import { createPdsClient } from "@/lib/api/pdsClient";
+import { createPDSClient } from "@/lib/api/pdsClient";
 import { retry } from "@/lib/api/retry";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
@@ -16,17 +15,14 @@ export const ComAtprotoRepoCreateRecordHandler: XRPCHandler<
     ComAtprotoRepoCreateRecord.OutputSchema
 > = {
     main: async (params, input, req) => {
-        const session = await getSessionFromRequest(req);
+        const { errorResponse, user, session } =
+            await getSessionFromRequest(req);
 
-        if (session.errorResponse) {
-            return session.errorResponse;
+        if (errorResponse) {
+            return errorResponse;
         }
 
-        const user = await db.query.users.findFirst({
-            where: (users, { eq }) => eq(users.id, session.session.userId),
-        });
-
-        if (input.repo !== user!.did) {
+        if (input.repo !== user.did) {
             return new AtprotoErrorResponse({
                 error: "InvalidRepo",
                 message: "User does not have access to this repo",
@@ -61,12 +57,12 @@ export const ComAtprotoRepoCreateRecordHandler: XRPCHandler<
 
         const recordHandler = recordHandlers[inputRecord["$type"]];
 
-        if (recordHandler) {
+        if (recordHandler && recordHandler.create) {
             const { errorResponse, newInput } = await recordHandler.create(
                 params,
                 createRecordInput,
                 req,
-                session.session,
+                session,
             );
 
             if (errorResponse) {
@@ -76,20 +72,13 @@ export const ComAtprotoRepoCreateRecordHandler: XRPCHandler<
             createRecordInput = newInput;
         }
 
-        console.log("reached", createRecordInput);
-
-        // return new JSONResponse({});
-
-        const pds = await createPdsClient({
-            session: session.session,
-            did: user!.did,
+        const pds = await createPDSClient({
+            session: session,
+            did: user.did,
         });
 
         const response = await retry(
-            async () => {
-                console.log("tryying");
-                return pds.com.atproto.repo.createRecord(createRecordInput);
-            },
+            async () => pds.com.atproto.repo.createRecord(createRecordInput),
             {
                 retries: 2,
                 allowError: (e) => e.message.includes("DPoP proof"),

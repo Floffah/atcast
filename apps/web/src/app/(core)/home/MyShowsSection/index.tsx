@@ -6,26 +6,20 @@ import { LiveAtcastPodcastShow, RecordNSIDs } from "@atcast/atproto";
 
 import { Button } from "@/components/Button";
 import { ShowCard } from "@/components/ui/ShowCard";
-import { createPdsClient } from "@/lib/api/pdsClient";
-import { getSessionFromRuntime } from "@/lib/server/data/getSession";
+import { createPDSClientFromRuntime } from "@/lib/api/authedPDSClient";
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
 import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
 export async function MyShowsSection() {
-    const { session, user } = await getSessionFromRuntime();
+    const { client, user } = await createPDSClientFromRuntime();
 
     let recordsResponse: ComAtprotoRepoListRecords.Response | undefined =
         undefined;
 
-    if (session) {
-        const pds = await createPdsClient({
-            session: session,
-            did: user.did,
-        });
-
-        recordsResponse = await pds.com.atproto.repo.listRecords({
+    if (client) {
+        recordsResponse = await client.com.atproto.repo.listRecords({
             repo: user.did,
             collection: RecordNSIDs.SHOW,
         });

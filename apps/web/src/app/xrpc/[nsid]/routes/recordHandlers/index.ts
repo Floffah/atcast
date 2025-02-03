@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
 
-import { ComAtprotoRepoCreateRecord } from "@atcast/atproto";
+import {
+    ComAtprotoRepoCreateRecord,
+    ComAtprotoRepoGetRecord,
+} from "@atcast/atproto";
 import { UserSession } from "@atcast/models";
 
 import { LiveAtcastPodcastShowRecordHandler } from "@/app/xrpc/[nsid]/routes/recordHandlers/live.atcast.podcast.show";
@@ -22,8 +25,15 @@ export type CreateRecordHandler = (
       }
 >;
 
+export type GetRecordHandler = (
+    params: ComAtprotoRepoGetRecord.QueryParams,
+    req: NextRequest,
+    session: UserSession,
+) => Promise<{ errorResponse?: AtprotoErrorResponse }>;
+
 export interface RecordHandler {
-    create: CreateRecordHandler;
+    create?: CreateRecordHandler;
+    get?: GetRecordHandler;
 }
 
 export const recordHandlers: Record<string, RecordHandler> = {

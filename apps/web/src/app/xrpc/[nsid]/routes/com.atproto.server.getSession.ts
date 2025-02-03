@@ -1,5 +1,4 @@
 import { ComAtprotoServerGetSession } from "@atcast/atproto";
-import { db } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { JSONResponse } from "@/lib/server/JSONResponse";
@@ -12,15 +11,11 @@ export const ComAtprotoServerGetSessionHandler: XRPCHandler<
     ComAtprotoServerGetSession.OutputSchema
 > = {
     main: async (_, _1, req) => {
-        const { errorResponse, session } = await getSessionFromRequest(req);
+        const { errorResponse, user } = await getSessionFromRequest(req);
 
         if (errorResponse) {
             return errorResponse;
         }
-
-        const user = (await db.query.users.findFirst({
-            where: (users, { eq }) => eq(users.id, session.userId),
-        }))!;
 
         const didDoc = await didResolver.resolve(user.did);
 

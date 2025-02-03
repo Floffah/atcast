@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "deps": "ncu -ws --root --target semver",
+    "deps": "ncu -ws --root --target semver -x eslint",
     "build": "turbo run build",
     "start": "turbo run start",
     "dev": "turbo run dev",
@@ -21,7 +21,7 @@
     "turbo": "^2.4.0",
     "turbo-ignore": "^2.4.0"
   },
-  "packageManager": "bun@1.2.1",
+  "packageManager": "bun@1.2.2",
   "trustedDependencies": [
     "@swc/core",
     "@vercel/speed-insights",
