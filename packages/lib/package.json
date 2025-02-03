@@ -19,7 +19,7 @@
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
-        "@types/bun": "^1.2.1",
+        "@types/bun": "^1.2.2",
         "tsup": "^8.3.6",
         "typescript": "^5.7.3"
     }
