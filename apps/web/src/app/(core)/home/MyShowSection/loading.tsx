@@ -1,29 +1,21 @@
 import stylex from "@stylexjs/stylex";
 
 import { colours } from "@/styles/colours.stylex";
-import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
+import { fontSizes } from "@/styles/fonts.stylex";
 import { rounded } from "@/styles/rounded.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
-export function MyShowsLoading() {
+export function MyShowLoading() {
     return (
         <section {...stylex.props(styles.container)}>
-            <h2 {...stylex.props(styles.heading)}>My Shows</h2>
+            <div {...stylex.props(styles.headingSkeleton)} />
+            <div {...stylex.props(styles.bioSkeleton)} />
 
             <div {...stylex.props(styles.myPodcastsSkeletonContainer)}>
                 <div {...stylex.props(styles.skeleton)} />
-                <div
-                    {...stylex.props(
-                        styles.skeleton,
-                        styles.animationDelay(0.1),
-                    )}
-                />
-                <div
-                    {...stylex.props(
-                        styles.skeleton,
-                        styles.animationDelay(0.2),
-                    )}
-                />
+                <div {...stylex.props(styles.skeleton)} />
+                <div {...stylex.props(styles.skeleton)} />
+                <div {...stylex.props(styles.skeleton)} />
             </div>
         </section>
     );
@@ -47,9 +39,27 @@ const styles = stylex.create({
         gap: sizes.spacing4,
     },
 
-    heading: {
-        fontSize: fontSizes.xl,
-        lineHeight: lineHeights.xl,
+    headingSkeleton: {
+        backgroundColor: {
+            default: colours.gray100,
+            [DARK]: colours.gray900,
+        },
+        animation: `${pulseAnimation} 4s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
+        width: sizes.spacing40,
+        height: fontSizes.xl,
+        borderRadius: rounded.lg,
+    },
+
+    bioSkeleton: {
+        backgroundColor: {
+            default: colours.gray100,
+            [DARK]: colours.gray900,
+        },
+        animation: `${pulseAnimation} 4s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
+        width: "100%",
+        maxWidth: sizes.spacing80,
+        height: sizes.spacing15,
+        borderRadius: rounded.lg,
     },
 
     myPodcastsSkeletonContainer: {
@@ -65,7 +75,7 @@ const styles = stylex.create({
         },
         animation: `${pulseAnimation} 4s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
         width: "100%",
-        height: sizes.spacing40,
+        height: sizes.spacing30,
         borderRadius: rounded.lg,
         flexGrow: 1,
     },

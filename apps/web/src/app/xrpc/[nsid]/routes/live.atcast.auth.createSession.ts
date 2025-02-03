@@ -1,3 +1,4 @@
+import { AtUri } from "@atproto/api";
 import { JoseKey } from "@atproto/jwk-jose";
 import { addDays, addSeconds } from "date-fns";
 import { and, eq, lt } from "drizzle-orm";
@@ -121,14 +122,14 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
         }
 
         const didDoc = await didResolver.resolve(tokenBody.sub);
-        let name: string | undefined;
+        let handle: string | undefined;
 
         if (didDoc && didDoc.alsoKnownAs) {
-            const url = new URL(didDoc.alsoKnownAs[0]);
-            name = url.host;
+            const url = new AtUri(didDoc.alsoKnownAs[0]);
+            handle = url.host;
         }
 
-        if (!name) {
+        if (!handle) {
             return new AtprotoErrorResponse({ error: "InvalidUser" });
         }
 
@@ -143,18 +144,18 @@ export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<
                 await db
                     .insert(users)
                     .values({
-                        name,
+                        handle,
                         did: tokenBody.sub,
                     })
                     .returning()
             )[0];
         }
 
-        if (user.name !== name) {
+        if (user.handle !== handle) {
             await db
                 .update(users)
                 .set({
-                    name,
+                    handle,
                 })
                 .where(eq(users.id, user.id));
         }

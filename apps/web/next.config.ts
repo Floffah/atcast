@@ -26,7 +26,7 @@ const nextConfig = {
                 stale: 86400, // 1 day
                 revalidate: 86400, // 1 day
                 expire: 604800, // 7 days
-            }
+            },
         },
     },
     typescript: {

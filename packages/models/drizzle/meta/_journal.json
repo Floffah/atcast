@@ -120,6 +120,20 @@
             "when": 1737482784114,
             "tag": "0016_acoustic_captain_britain",
             "breakpoints": true
+        },
+        {
+            "idx": 17,
+            "version": "7",
+            "when": 1738592105115,
+            "tag": "0017_deep_invaders",
+            "breakpoints": true
+        },
+        {
+            "idx": 18,
+            "version": "7",
+            "when": 1738594571127,
+            "tag": "0018_nice_wolf_cub",
+            "breakpoints": true
         }
     ]
 }

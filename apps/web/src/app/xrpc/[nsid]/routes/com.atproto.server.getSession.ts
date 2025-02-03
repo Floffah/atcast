@@ -20,7 +20,7 @@ export const ComAtprotoServerGetSessionHandler: XRPCHandler<
         const didDoc = await didResolver.resolve(user.did);
 
         return new JSONResponse({
-            handle: user.name,
+            handle: user.handle,
             did: user.did,
             email: user.email ?? undefined,
             emailConfirmed: false,

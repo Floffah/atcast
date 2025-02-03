@@ -6,7 +6,6 @@ import {
 } from "@atcast/atproto";
 import { UserSession } from "@atcast/models";
 
-import { LiveAtcastPodcastShowRecordHandler } from "@/app/xrpc/[nsid]/routes/recordHandlers/live.atcast.podcast.show";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 
 export type CreateRecordHandler = (
@@ -36,6 +35,4 @@ export interface RecordHandler {
     get?: GetRecordHandler;
 }
 
-export const recordHandlers: Record<string, RecordHandler> = {
-    "live.atcast.podcast.show": LiveAtcastPodcastShowRecordHandler,
-};
+export const recordHandlers: Record<string, RecordHandler> = {};

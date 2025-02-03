@@ -3,15 +3,15 @@ import { Suspense } from "react";
 
 import { ActivityFeedSection } from "@/app/(core)/home/ActivityFeed";
 import { ActivityFeedLoading } from "@/app/(core)/home/ActivityFeed/loading";
-import { MyShowsSection } from "@/app/(core)/home/MyShowsSection";
-import { MyShowsLoading } from "@/app/(core)/home/MyShowsSection/loading";
+import { MyShowSection } from "@/app/(core)/home/MyShowSection";
+import { MyShowLoading } from "@/app/(core)/home/MyShowSection/loading";
 import { sizes } from "@/styles/sizes.stylex";
 
 export default async function HomePage() {
     return (
         <main {...stylex.props(styles.container)}>
-            <Suspense fallback={<MyShowsLoading />}>
-                <MyShowsSection />
+            <Suspense fallback={<MyShowLoading />}>
+                <MyShowSection />
             </Suspense>
 
             <Suspense fallback={<ActivityFeedLoading />}>

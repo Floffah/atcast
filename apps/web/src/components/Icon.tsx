@@ -1,5 +1,3 @@
-"use client";
-
 import * as AccessibleIcon from "@radix-ui/react-accessible-icon";
 import { SVGProps, createElement, forwardRef } from "react";
 

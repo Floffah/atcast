@@ -2,7 +2,7 @@ import { AtUri } from "@atproto/api";
 import stylex from "@stylexjs/stylex";
 import Link from "next/link";
 
-import { LiveAtcastPodcastShow } from "@atcast/atproto";
+import { LiveAtcastShowEpisode } from "@atcast/atproto";
 
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, lineHeights } from "@/styles/fonts.stylex";
@@ -10,11 +10,11 @@ import { rounded } from "@/styles/rounded.stylex";
 import { shadows } from "@/styles/shadows.stylex";
 import { sizes } from "@/styles/sizes.stylex";
 
-export function ShowCard({
+export function EpisodeCard({
     show,
     uri,
 }: {
-    show: LiveAtcastPodcastShow.Record;
+    show: LiveAtcastShowEpisode.Record;
     uri: string;
 }) {
     const url = new AtUri(uri);
