@@ -6,9 +6,13 @@ Proof-of-concept podcast distribution platform for the AtProto.
 
 ### File upload
 
-AtCast uses UploadThing instead of storing episodes in the pds. **This will be changed in the future** once I find a good way to store very large files in an AtProto PDS without hitting limits or annoying BlueSky's admins.
+The AtCast lexicons and backend support up to 20MB of audio data per episode. This is to ensure that the PDS can handle the data without slowing down.
 
-This is also so that AtCast can provide a kind of CDN interface using regular rest/http/hls, etc, where services (i.e. Spotify) can't interact with the AtProto. Once the PDS issue is solved, the UploadThing repository will be used as a mirror to store generated streamable audio segments.
+The 20MB is modeled after 60 minutes of 30kbps 48khz audio compressed in OPUS format. If necessary, this may be increased in the future.
+
+AtCast does not expect the `audio` field of [`live.atcast.show.episode`](./lexicons/live/atcast/show/episode.json) to ever be changed. It will not be set when the record is created, as uploading and encoding is done in the background. These constraints are because AtCast will generate HLS streams from the audio data and store them in the UploadThing repository after the initial upload. If the audio data is changed in the PDS, the HLS streams will be out of sync. AtCast will be upgraded in the future to handle changes and re-generate the HLS streams.
+
+Note that HLS generation is currently not implemented, but in progress. This will require a separate cluster of workers to handle the encoding of the audio data.
 
 ### Podcast model
 

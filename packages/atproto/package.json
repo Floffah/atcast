@@ -18,15 +18,15 @@
         "setup": "bun run scripts/codegen.ts"
     },
     "dependencies": {
-        "@atproto/api": "^0.13.32",
-        "@atproto/identity": "^0.4.5",
-        "@atproto/lexicon": "^0.4.5",
-        "@atproto/xrpc": "^0.6.7"
+        "@atproto/api": "^0.13.33",
+        "@atproto/identity": "^0.4.6",
+        "@atproto/lexicon": "^0.4.6",
+        "@atproto/xrpc": "^0.6.8"
     },
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
         "@atcast/prettier-config": "workspace:*",
-        "@atproto/lex-cli": "^0.5.6",
+        "@atproto/lex-cli": "^0.5.7",
         "@types/bun": "^1.2.2",
         "tsup": "^8.3.6",
         "typescript": "^5.7.3"

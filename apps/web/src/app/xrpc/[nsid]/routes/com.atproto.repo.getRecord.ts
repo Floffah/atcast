@@ -21,6 +21,7 @@ export const ComAtprotoRepoGetRecordHandler: XRPCHandler<
             return errorResponse;
         }
 
+        // We are resolving data from this user's specific PDS - to get other users, use a generic bsky or atproto client
         if (params.repo !== user.did) {
             return new AtprotoErrorResponse({
                 error: "InvalidRepo",

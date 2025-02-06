@@ -1,0 +1,1 @@
+ALTER TABLE "episodes" ALTER COLUMN "ut_file_key" DROP NOT NULL;

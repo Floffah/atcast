@@ -1,0 +1,1 @@
+ALTER TABLE "episodes" ADD COLUMN "ut_file_key" varchar(255) NOT NULL;

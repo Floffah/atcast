@@ -134,6 +134,41 @@
             "when": 1738594571127,
             "tag": "0018_nice_wolf_cub",
             "breakpoints": true
+        },
+        {
+            "idx": 19,
+            "version": "7",
+            "when": 1738604526557,
+            "tag": "0019_confused_bedlam",
+            "breakpoints": true
+        },
+        {
+            "idx": 20,
+            "version": "7",
+            "when": 1738605170463,
+            "tag": "0020_oval_harry_osborn",
+            "breakpoints": true
+        },
+        {
+            "idx": 21,
+            "version": "7",
+            "when": 1738851028942,
+            "tag": "0021_warm_tigra",
+            "breakpoints": true
+        },
+        {
+            "idx": 22,
+            "version": "7",
+            "when": 1738859325087,
+            "tag": "0022_fair_madrox",
+            "breakpoints": true
+        },
+        {
+            "idx": 23,
+            "version": "7",
+            "when": 1738860240258,
+            "tag": "0023_glorious_blacklash",
+            "breakpoints": true
         }
     ]
 }

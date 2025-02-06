@@ -1,0 +1,313 @@
+{
+    "id": "987d450a-bedf-4a6f-91c5-26cb56070989",
+    "prevId": "8396b018-fef4-4371-ae44-25fc43658828",
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "public.episodes": {
+            "name": "episodes",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "public_id": {
+                    "name": "public_id",
+                    "type": "varchar(36)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "serial",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "ut_file_key": {
+                    "name": "ut_file_key",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "published_at": {
+                    "name": "published_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "episodes_user_id_users_id_fk": {
+                    "name": "episodes_user_id_users_id_fk",
+                    "tableFrom": "episodes",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "episodes_public_id_unique": {
+                    "name": "episodes_public_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["public_id"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.user_auth_requests": {
+            "name": "user_auth_requests",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "did": {
+                    "name": "did",
+                    "type": "varchar(32)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "pkce_verifier": {
+                    "name": "pkce_verifier",
+                    "type": "varchar(128)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "state": {
+                    "name": "state",
+                    "type": "varchar(128)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "jwk": {
+                    "name": "jwk",
+                    "type": "json",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "expires_at": {
+                    "name": "expires_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.users": {
+            "name": "users",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "public_id": {
+                    "name": "public_id",
+                    "type": "varchar(36)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "handle": {
+                    "name": "handle",
+                    "type": "varchar(256)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "did": {
+                    "name": "did",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "email": {
+                    "name": "email",
+                    "type": "varchar(320)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "last_active_at": {
+                    "name": "last_active_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "default": "now()"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "users_public_id_unique": {
+                    "name": "users_public_id_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["public_id"]
+                },
+                "users_handle_unique": {
+                    "name": "users_handle_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["handle"]
+                },
+                "users_did_unique": {
+                    "name": "users_did_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["did"]
+                },
+                "users_email_unique": {
+                    "name": "users_email_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["email"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        },
+        "public.user_sessions": {
+            "name": "user_sessions",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "serial",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "user_id": {
+                    "name": "user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "token": {
+                    "name": "token",
+                    "type": "varchar(256)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "access_token": {
+                    "name": "access_token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "access_token_expires_at": {
+                    "name": "access_token_expires_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "access_token_type": {
+                    "name": "access_token_type",
+                    "type": "varchar(32)",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "refresh_token": {
+                    "name": "refresh_token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "jwk": {
+                    "name": "jwk",
+                    "type": "json",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "expires_at": {
+                    "name": "expires_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "last_used_at": {
+                    "name": "last_used_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "user_sessions_user_id_users_id_fk": {
+                    "name": "user_sessions_user_id_users_id_fk",
+                    "tableFrom": "user_sessions",
+                    "tableTo": "users",
+                    "columnsFrom": ["user_id"],
+                    "columnsTo": ["id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "no action"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "user_sessions_token_unique": {
+                    "name": "user_sessions_token_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["token"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        }
+    },
+    "enums": {
+        "public.oauth_provider": {
+            "name": "oauth_provider",
+            "schema": "public",
+            "values": ["BSKY"]
+        },
+        "public.show_collaborator_type": {
+            "name": "show_collaborator_type",
+            "schema": "public",
+            "values": ["OWNER", "COLLABORATOR"]
+        }
+    },
+    "schemas": {},
+    "sequences": {},
+    "roles": {},
+    "policies": {},
+    "views": {},
+    "_meta": {
+        "columns": {},
+        "schemas": {},
+        "tables": {}
+    }
+}

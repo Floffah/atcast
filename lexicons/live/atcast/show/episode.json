@@ -8,18 +8,24 @@
             "key": "any",
             "record": {
                 "type": "object",
-                "required": ["name"],
+                "required": ["title"],
                 "properties": {
-                    "name": {
+                    "title": {
                         "type": "string",
-                        "description": "The name of the episode.",
+                        "description": "The title of the episode.",
                         "maxLength": 256,
                         "minLength": 5
                     },
                     "description": {
                         "type": "string",
-                        "description": "The description of the episode.",
+                        "description": "The description of the episode. Uses GitHub-flavoured Markdown.",
                         "maxLength": 1024
+                    },
+                    "audio": {
+                        "type": "blob",
+                        "description": "The audio of the episode. Max 20MB, at 26kbps, 48khz, stereo, OPUS compressed.",
+                        "maxSize": 20000000,
+                        "accept": ["audio/ogg", "audio/opus"]
                     },
                     "publishedAt": {
                         "type": "string",

@@ -21,4 +21,7 @@ export const sizes = stylex.defineVars({
     spacing30: "7.5rem",
     spacing40: "10rem",
     spacing80: "20rem",
+    spacing96: "24rem",
+
+    screenMd: "640px",
 });
