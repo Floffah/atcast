@@ -1,0 +1,29 @@
+{
+    "name": "@atcast/worker",
+    "scripts": {
+        "start": "bun run src/index.ts",
+        "dev": "bun run --watch src/index.ts",
+        "lint": "tsc --noEmit && eslint --ext .ts,.js src --ignore-path ../../.gitignore",
+        "format": "prettier --write **/*.{ts,js,json} src --ignore-path ../../.gitignore"
+    },
+    "dependencies": {
+        "@atcast/atproto": "workspace:*",
+        "@atcast/eslint-config": "workspace:*",
+        "@atcast/lib": "workspace:*",
+        "@atcast/models": "workspace:*",
+        "@atcast/prettier-config": "workspace:*",
+        "@atproto/api": "^0.13.35",
+        "@atproto/identity": "^0.4.6",
+        "@atproto/jwk-jose": "^0.1.4",
+        "@atproto/syntax": "^0.3.2",
+        "croner": "^9.0.0",
+        "drizzle-orm": "^0.39.2",
+        "hono": "^4.7.0",
+        "uploadthing": "^7.4.4"
+    },
+    "devDependencies": {
+        "@tsconfig/bun": "^1.0.7",
+        "@types/bun": "^1.2.2",
+        "typescript": "^5.7.3"
+    }
+}

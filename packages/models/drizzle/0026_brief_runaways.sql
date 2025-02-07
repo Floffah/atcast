@@ -1,0 +1,1 @@
+ALTER TABLE "audio_process_requests" ALTER COLUMN "ut_file_key" SET NOT NULL;

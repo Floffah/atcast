@@ -18,7 +18,7 @@
         "setup": "bun run scripts/codegen.ts"
     },
     "dependencies": {
-        "@atproto/api": "^0.13.33",
+        "@atproto/api": "^0.13.35",
         "@atproto/identity": "^0.4.6",
         "@atproto/lexicon": "^0.4.6",
         "@atproto/xrpc": "^0.6.8"

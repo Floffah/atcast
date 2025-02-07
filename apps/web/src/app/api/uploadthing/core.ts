@@ -1,6 +1,6 @@
 import { AtUri } from "@atproto/api";
 import { ATP_URI_REGEX } from "@atproto/syntax";
-import { type FileRouter, createUploadthing } from "uploadthing/next";
+import { type FileRouter, UTFiles, createUploadthing } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { z } from "zod";
 
@@ -30,7 +30,7 @@ export const utFileRouter = {
             }),
         )
         // Set permissions and file types for this FileRoute
-        .middleware(async ({ req, input }) => {
+        .middleware(async ({ req, input, files }) => {
             // This code runs on your server before upload
             const { user } = await getSessionFromRequest(req);
 
@@ -62,11 +62,19 @@ export const utFileRouter = {
                 throw new UploadThingError("Audio already uploaded");
             }
 
+            const fileOverrides = files.map((file) => ({
+                ...file,
+                name: `${uri.host}.${uri.rkey}.${file.name}`,
+                customId: encodeURIComponent(uri.toString()),
+            }));
+
             // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return {
                 userId: user.id,
                 userDID: user.did,
                 atUri: uri.toString(),
+
+                [UTFiles]: fileOverrides,
             };
         })
         .onUploadComplete(async ({ metadata, file }) => {
@@ -78,7 +86,6 @@ export const utFileRouter = {
                     episodeId: atUri.rkey,
                     userId: metadata.userId,
                     uploadthingFileKey: file.key,
-                    processing: false,
                 })
                 .returning();
 

@@ -2,6 +2,7 @@ import { AtUri } from "@atproto/api";
 import { notFound, redirect } from "next/navigation";
 
 import { RecordNSIDs } from "@atcast/atproto";
+import { db } from "@atcast/models";
 
 import { UploadForm } from "@/app/(core)/publish/[id]/UploadForm";
 import { getEpisode } from "@/lib/server/data/getEpisode";
@@ -26,6 +27,21 @@ export default async function UploadPage({
 
     if (!episode) {
         return notFound();
+    }
+
+    const audioProcessRequests = await db.query.audioProcessRequests.findMany({
+        where: (audioProcessRequests, { and, eq }) =>
+            and(
+                eq(audioProcessRequests.episodeId, uri.rkey),
+                eq(audioProcessRequests.userId, user.id),
+            ),
+    });
+
+    if (
+        audioProcessRequests.length > 0 &&
+        !audioProcessRequests.some((req) => req.errorMessage)
+    ) {
+        return redirect(`/${episode.user.did}/${episode.episode.id}`);
     }
 
     return <UploadForm url={uri.toString()} />;

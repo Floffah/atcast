@@ -3,11 +3,12 @@ import { AtUri } from "@atproto/api";
 import { Episode, User, db } from "@atcast/models";
 
 import { EpisodeProcessingBanner } from "@/app/(core)/[repo]/[id]/AudioPlayerSection/EpisodeProcessingBanner";
+import { ProcessingErrorBanner } from "@/app/(core)/[repo]/[id]/AudioPlayerSection/ProcessingErrorBanner";
 
 export async function AudioPlayerSection({
     uri,
     user,
-    internalEpisode: _,
+    internalEpisode,
 }: {
     uri: AtUri;
     user: User;
@@ -22,8 +23,27 @@ export async function AudioPlayerSection({
     });
 
     if (processRequests.length > 0) {
+        const erroredRequest = processRequests.find(
+            (req) => !!req.errorMessage,
+        );
+
+        if (erroredRequest) {
+            return (
+                <ProcessingErrorBanner internalEpisode={internalEpisode}>
+                    {erroredRequest.errorMessage}
+                </ProcessingErrorBanner>
+            );
+        }
+
         return <EpisodeProcessingBanner />;
     }
 
-    return null;
+    return (
+        <audio controls>
+            <source
+                src={`https://${process.env.UPLOADTHING_HOST}/f/${internalEpisode.uploadthingFileKey}`}
+                type="audio/ogg"
+            />
+        </audio>
+    );
 }

@@ -15,8 +15,6 @@ export async function EpisodeTitleSection({
     uri: AtUri;
     episode: LiveAtcastShowEpisode.Record;
 }) {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     const atprotoClient = createBskyClient();
 
     const profileRecord = await atprotoClient.app.bsky.actor.getProfile({

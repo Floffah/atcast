@@ -1,0 +1,10 @@
+{
+    "extends": "@tsconfig/bun",
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules"]
+}

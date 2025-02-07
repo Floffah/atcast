@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: atcast-worker
+    runtime: docker
+    dockerfilePath: ./apps/worker/Dockerfile
+    dockerContext: ./
+    region: frankfurt
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: UPLOADTHING_TOKEN
+        sync: false
+      - key: UPLOADTHING_HOST
+        value: 3xrv0clwki.ufs.sh
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 5

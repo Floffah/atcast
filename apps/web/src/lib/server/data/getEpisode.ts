@@ -51,13 +51,7 @@ export const getEpisode = cache(async (uri: AtUri) => {
             collection: "live.atcast.show.episode",
             rkey: uri.rkey,
         });
-    } catch (e: any) {
-        if (e instanceof Error && e.message.includes("Could not locate")) {
-            record = null;
-        }
-
-        throw e;
-    }
+    } catch (_e) {}
 
     if (!record || !record.data) {
         if (episode) {

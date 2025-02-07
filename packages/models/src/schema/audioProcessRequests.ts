@@ -1,7 +1,18 @@
-import { boolean, foreignKey, pgTable, serial } from "drizzle-orm/pg-core";
+import {
+    foreignKey,
+    pgTable,
+    serial,
+    text,
+    timestamp,
+} from "drizzle-orm/pg-core";
 
 import { episodes } from "@/schema/episodes";
-import { publicId, publicIdLike, uploadthingFileKey } from "@/schema/fields";
+import {
+    createdAt,
+    publicId,
+    publicIdLike,
+    uploadthingFileKey,
+} from "@/schema/fields";
 
 export const audioProcessRequests = pgTable(
     "audio_process_requests",
@@ -11,9 +22,12 @@ export const audioProcessRequests = pgTable(
         userId: serial("user_id").notNull(),
         episodeId: publicIdLike("episode_id").notNull(),
 
-        uploadthingFileKey: uploadthingFileKey("ut_file_key"),
+        uploadthingFileKey: uploadthingFileKey("ut_file_key").notNull(),
 
-        processing: boolean("processing").notNull().default(false),
+        startedProcessingAt: timestamp("started_processing_at"),
+        errorMessage: text(),
+
+        createdAt: createdAt(),
     },
     (audioUploads) => [
         foreignKey({
@@ -22,3 +36,5 @@ export const audioProcessRequests = pgTable(
         }).onDelete("cascade"),
     ],
 );
+
+export type AudioProcessRequest = typeof audioProcessRequests.$inferSelect;
