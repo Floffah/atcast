@@ -10,9 +10,9 @@ The AtCast lexicons and backend support up to 20MB of audio data per episode. Th
 
 The 20MB is modeled after 60 minutes of 30kbps 48khz audio compressed in OPUS format. If necessary, this may be increased in the future.
 
-AtCast does not expect the `audio` field of [`live.atcast.show.episode`](./lexicons/live/atcast/show/episode.json) to ever be changed. It will not be set when the record is created, as uploading and encoding is done in the background. These constraints are because AtCast will generate HLS streams from the audio data and store them in the UploadThing repository after the initial upload. If the audio data is changed in the PDS, the HLS streams will be out of sync. AtCast will be upgraded in the future to handle changes and re-generate the HLS streams.
+AtCast does **not** expect the `audio` property of records following the `live.atcast.show.episode` lexicon unless edited by AtCast itself. This will be changed in the future.
 
-Note that HLS generation is currently not implemented, but in progress. This will require a separate cluster of workers to handle the encoding of the audio data.
+Currently, AtCast has two services: the website and the worker service. The worker service currently is only responsible for compressing and re-encoding the audio files to OPUS format. In the future, this worker will also generate HLS streams for the audio files.
 
 ### Podcast model
 
@@ -31,6 +31,7 @@ NEXT_PUBLIC_BASE_URL="http://localhost:3000"
 NEXT_PUBLIC_REACT_SCAN_API_KEY="key"
 # Required
 UPLOADTHING_TOKEN="token"
+UPLOADTHING_HOST="id.ufs.sh"
 ```
 
-This file should be placed at the path `apps/web/.env`. You may also need to copy this file to `packages/models/.env` so that the database migrations apply properly.
+This file should be placed at the paths `apps/web/.env` and `apps/worker/.env`. You may also need to copy this file to `packages/models/.env` so that the database migrations apply properly.
