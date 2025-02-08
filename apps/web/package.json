@@ -21,7 +21,7 @@
         "@atproto/syntax": "^0.3.2",
         "@atproto/xrpc": "^0.6.8",
         "@hookform/resolvers": "^3.10.0",
-        "@iconify/json": "^2.2.303",
+        "@iconify/json": "^2.2.304",
         "@normy/react-query": "^0.18.0",
         "@radix-ui/react-accessible-icon": "^1.1.2",
         "@radix-ui/react-slot": "^1.1.2",

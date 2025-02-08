@@ -7,13 +7,12 @@ import { cookies, headers } from "next/headers";
 import { NextRequest } from "next/server";
 import { cache } from "react";
 
+import { createDPoPFetch, getClientId } from "@atcast/atproto";
 import { SESSION_TOKEN } from "@atcast/lib";
 import { db, userSessions } from "@atcast/models";
 
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
-import { getClientId } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
-import { createDPoPFetch } from "@/lib/server/dpopFetch";
 
 export function getSessionFromRequest(req: NextRequest) {
     return getSession(req.headers, req.cookies);

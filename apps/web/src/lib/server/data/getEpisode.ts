@@ -5,10 +5,10 @@ import { cache } from "react";
 import {
     ComAtprotoRepoGetRecord,
     LiveAtcastShowEpisode,
+    createBskyClient,
 } from "@atcast/atproto";
 import { db, episodes, users } from "@atcast/models";
 
-import { createBskyClient } from "@/lib/api/bskyClient";
 import { didResolver } from "@/lib/server/identity";
 
 export const getEpisode = cache(async (uri: AtUri) => {

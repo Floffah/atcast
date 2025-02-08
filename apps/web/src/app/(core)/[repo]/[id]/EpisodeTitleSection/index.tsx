@@ -1,9 +1,8 @@
 import { AtUri } from "@atproto/api";
 import stylex from "@stylexjs/stylex";
 
-import { LiveAtcastShowEpisode } from "@atcast/atproto";
+import { LiveAtcastShowEpisode, createBskyClient } from "@atcast/atproto";
 
-import { createBskyClient } from "@/lib/api/bskyClient";
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, fontWeights, lineHeights } from "@/styles/fonts.stylex";
 import { sizes } from "@/styles/sizes.stylex";

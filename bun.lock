@@ -26,7 +26,7 @@
         "@atproto/syntax": "^0.3.2",
         "@atproto/xrpc": "^0.6.8",
         "@hookform/resolvers": "^3.10.0",
-        "@iconify/json": "^2.2.303",
+        "@iconify/json": "^2.2.304",
         "@normy/react-query": "^0.18.0",
         "@radix-ui/react-accessible-icon": "^1.1.2",
         "@radix-ui/react-slot": "^1.1.2",
@@ -101,10 +101,16 @@
     "packages/atproto": {
       "name": "@atcast/atproto",
       "dependencies": {
+        "@atcast/models": "workspace:*",
         "@atproto/api": "^0.13.35",
+        "@atproto/crypto": "^0.4.4",
         "@atproto/identity": "^0.4.6",
+        "@atproto/jwk-jose": "^0.1.4",
         "@atproto/lexicon": "^0.4.6",
+        "@atproto/oauth-client": "^0.3.9",
         "@atproto/xrpc": "^0.6.8",
+        "lru-cache": "^11.0.2",
+        "multiformats": "^13.3.1",
       },
       "devDependencies": {
         "@atcast/eslint-config": "workspace:*",
@@ -437,7 +443,7 @@
 
     "@humanwhocodes/object-schema": ["@humanwhocodes/object-schema@2.0.3", "", {}, "sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA=="],
 
-    "@iconify/json": ["@iconify/json@2.2.303", "", { "dependencies": { "@iconify/types": "*", "pathe": "^1.1.2" } }, "sha512-/s42MDeyZhJbL6g4uNjqqAPUi+tRnF0IRd99ZPhEV5iLHOQRhmURkjARHmnzhg8hQQtKP4/ZaXKS77W0gK+7ZQ=="],
+    "@iconify/json": ["@iconify/json@2.2.304", "", { "dependencies": { "@iconify/types": "*", "pathe": "^1.1.2" } }, "sha512-8eO5m27lIfYLRFCxNgZQD/AMcDYw9NzPT6ViSYJDvX+Vevuj/smaQ/SfHVTNFzj5JcISDh5AV6n2nllQthceog=="],
 
     "@iconify/types": ["@iconify/types@2.0.0", "", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 

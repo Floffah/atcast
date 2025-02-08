@@ -18,10 +18,16 @@
         "setup": "bun run scripts/codegen.ts"
     },
     "dependencies": {
+        "@atcast/models": "workspace:*",
         "@atproto/api": "^0.13.35",
+        "@atproto/crypto": "^0.4.4",
         "@atproto/identity": "^0.4.6",
+        "@atproto/jwk-jose": "^0.1.4",
         "@atproto/lexicon": "^0.4.6",
-        "@atproto/xrpc": "^0.6.8"
+        "@atproto/oauth-client": "^0.3.9",
+        "@atproto/xrpc": "^0.6.8",
+        "lru-cache": "^11.0.2",
+        "multiformats": "^13.3.1"
     },
     "devDependencies": {
         "@atcast/eslint-config": "workspace:*",

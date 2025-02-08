@@ -1,9 +1,9 @@
 import { ComAtprotoRepoGetRecord } from "@atcast/atproto";
+import { retry } from "@atcast/lib";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { recordHandlers } from "@/app/xrpc/[nsid]/routes/recordHandlers";
 import { createPDSClient } from "@/lib/api/pdsClient";
-import { retry } from "@/lib/api/retry";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
 import { getSessionFromRequest } from "@/lib/server/data/getSession";

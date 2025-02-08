@@ -2,17 +2,20 @@ import { JoseKey } from "@atproto/jwk-jose";
 import { nanoid } from "nanoid";
 import pkceChallenge from "pkce-challenge";
 
-import { LiveAtcastAuthGetAuthUrl } from "@atcast/atproto";
+import {
+    LiveAtcastAuthGetAuthUrl,
+    clientMetadata,
+    createDPoPFetch,
+    getClientId,
+    getRedirectUri,
+} from "@atcast/atproto";
 import { db, userAuthRequests } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
-import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
-import { createDPoPFetch } from "@/lib/server/dpopFetch";
 import { handleResolver } from "@/lib/server/identity";
-import clientMetadata from "~public/client-metadata.json";
 
 export const LiveAtcastAuthGetAuthUrlHandler: XRPCHandler<
     LiveAtcastAuthGetAuthUrl.QueryParams,

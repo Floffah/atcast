@@ -1,11 +1,12 @@
 import { OAuthAuthorizationServerMetadata } from "@atproto/oauth-client";
 
-import { createBskyClient } from "@/lib/api/bskyClient";
-import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import {
     CreateDPopFetchOptions,
+    createBskyClient,
     createDPoPFetch,
-} from "@/lib/server/dpopFetch";
+} from "@atcast/atproto";
+
+import { getBskyAuthInfo } from "@/lib/oauth/bsky";
 import { didResolver } from "@/lib/server/identity";
 
 export async function createPDSClient(

@@ -5,16 +5,19 @@ import { and, eq, lt } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { after } from "next/server";
 
-import { LiveAtcastAuthCreateSession } from "@atcast/atproto";
+import {
+    LiveAtcastAuthCreateSession,
+    createDPoPFetch,
+    getClientId,
+    getRedirectUri,
+} from "@atcast/atproto";
 import { SESSION_TOKEN } from "@atcast/lib";
 import { db, userAuthRequests, userSessions, users } from "@atcast/models";
 
 import { XRPCHandler } from "@/app/xrpc/[nsid]/routes/index";
 import { getBskyAuthInfo } from "@/lib/oauth/bsky";
-import { getClientId, getRedirectUri } from "@/lib/oauth/metadata";
 import { AtprotoErrorResponse } from "@/lib/server/AtprotoErrorResponse";
 import { JSONResponse } from "@/lib/server/JSONResponse";
-import { createDPoPFetch } from "@/lib/server/dpopFetch";
 import { didResolver } from "@/lib/server/identity";
 
 export const LiveAtcastAuthCreateSessionHandler: XRPCHandler<

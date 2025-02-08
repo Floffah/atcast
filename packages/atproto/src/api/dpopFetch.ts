@@ -6,7 +6,7 @@ import { base64url } from "multiformats/bases/base64";
 
 import { UserSession } from "@atcast/models";
 
-const nonceMap = new LRUCache<string, string>({
+export const dPoPNonceMap = new LRUCache<string, string>({
     allowStale: false,
     updateAgeOnGet: false,
     updateAgeOnHas: false,
@@ -61,7 +61,7 @@ export function createDPoPFetch(options: CreateDPopFetchOptions): typeof fetch {
 
         const url = new URL(request.url);
 
-        const initialNonce = nonceMap.get(url.origin);
+        const initialNonce = dPoPNonceMap.get(url.origin);
 
         const jwt = await createJWK(
             alg,
@@ -74,7 +74,9 @@ export function createDPoPFetch(options: CreateDPopFetchOptions): typeof fetch {
 
         request.headers.set("DPoP", jwt);
 
+        console.log(request);
         const initialResponse = await fetch(request);
+        console.log(initialResponse);
 
         const nonce = initialResponse.headers.get("dpop-nonce");
         if (!nonce || nonce === initialNonce) {
@@ -82,8 +84,8 @@ export function createDPoPFetch(options: CreateDPopFetchOptions): typeof fetch {
         }
 
         try {
-            nonceMap.set(url.origin, nonce);
-        } catch (_e) {}
+            dPoPNonceMap.set(url.origin, nonce);
+        } catch {}
 
         const peekedResponse = await initialResponse.clone().json();
 
@@ -126,6 +128,8 @@ async function createJWK(
     nonce?: string,
     ath?: string,
 ) {
+    console.log({ nonce });
+
     return await key.createJwt(
         {
             alg,

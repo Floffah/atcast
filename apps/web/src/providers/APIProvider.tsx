@@ -3,9 +3,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 
-import { AtpBaseClient, ComAtprotoServerGetSession } from "@atcast/atproto";
+import {
+    AtpBaseClient,
+    ComAtprotoServerGetSession,
+    createBskyClient,
+} from "@atcast/atproto";
 
-import { createBskyClient } from "@/lib/api/bskyClient";
 import { formatAPIQueryKey } from "@/lib/api/formatQueryKey";
 import { createXRPCClient } from "@/lib/api/xrpcClient";
 
