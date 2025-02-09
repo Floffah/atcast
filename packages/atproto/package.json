@@ -21,7 +21,6 @@
         "@atcast/models": "workspace:*",
         "@atproto/api": "^0.13.35",
         "@atproto/crypto": "^0.4.4",
-        "@atproto/identity": "^0.4.6",
         "@atproto/jwk-jose": "^0.1.4",
         "@atproto/lexicon": "^0.4.6",
         "@atproto/oauth-client": "^0.3.9",
