@@ -74,9 +74,7 @@ export function createDPoPFetch(options: CreateDPopFetchOptions): typeof fetch {
 
         request.headers.set("DPoP", jwt);
 
-        console.log(request);
         const initialResponse = await fetch(request);
-        console.log(initialResponse);
 
         const nonce = initialResponse.headers.get("dpop-nonce");
         if (!nonce || nonce === initialNonce) {
@@ -128,8 +126,6 @@ async function createJWK(
     nonce?: string,
     ath?: string,
 ) {
-    console.log({ nonce });
-
     return await key.createJwt(
         {
             alg,

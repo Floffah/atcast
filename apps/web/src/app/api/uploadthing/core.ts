@@ -1,5 +1,6 @@
 import { AtUri } from "@atproto/api";
 import { ATP_URI_REGEX } from "@atproto/syntax";
+import { eq, or } from "drizzle-orm";
 import { type FileRouter, UTFiles, createUploadthing } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { z } from "zod";
@@ -59,7 +60,23 @@ export const utFileRouter = {
                 });
 
             if (existingProcessRequests.length > 0) {
-                throw new UploadThingError("Audio already uploaded");
+                if (
+                    existingProcessRequests.some(
+                        (req) => !req.errorMessage && !req.startedProcessingAt,
+                    )
+                ) {
+                    throw new UploadThingError("Audio already uploaded");
+                }
+
+                await db
+                    .delete(audioProcessRequests)
+                    .where(
+                        or(
+                            ...existingProcessRequests.map((req) =>
+                                eq(audioProcessRequests.id, req.id),
+                            ),
+                        ),
+                    );
             }
 
             const fileOverrides = files.map((file) => ({
