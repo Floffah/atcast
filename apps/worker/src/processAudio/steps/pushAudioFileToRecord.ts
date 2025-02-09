@@ -42,7 +42,7 @@ export async function pushAudioFileToRecord(
             pdsClient.com.atproto.repo.uploadBlob(file, {
                 headers: {
                     "Content-Type": "audio/ogg",
-                    "Content-Length": file.length.toString(),
+                    "Content-Length": file.length?.toString(),
                     "Content-Disposition": `attachment; filename="${fileName}.opus"`,
                 },
             }),
