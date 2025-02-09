@@ -3,6 +3,7 @@ import { AtUri } from "@atproto/api";
 import { Episode, User, db } from "@atcast/models";
 
 import { EpisodeProcessingBanner } from "@/app/(core)/[repo]/[id]/AudioPlayerSection/EpisodeProcessingBanner";
+import { NoAudioBanner } from "@/app/(core)/[repo]/[id]/AudioPlayerSection/NoAudioBanner";
 import { ProcessingErrorBanner } from "@/app/(core)/[repo]/[id]/AudioPlayerSection/ProcessingErrorBanner";
 
 export async function AudioPlayerSection({
@@ -36,6 +37,10 @@ export async function AudioPlayerSection({
         }
 
         return <EpisodeProcessingBanner />;
+    }
+
+    if (!internalEpisode.uploadthingFileKey) {
+        return <NoAudioBanner internalEpisode={internalEpisode} />;
     }
 
     return (

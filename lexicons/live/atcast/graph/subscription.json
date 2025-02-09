@@ -1,0 +1,19 @@
+{
+    "lexicon": 1,
+    "id": "live.atcast.graph.subscription",
+    "defs": {
+        "main": {
+            "type": "record",
+            "description": "Record declaring a social 'subscription' relationship of another account.",
+            "key": "tid",
+            "record": {
+                "type": "object",
+                "required": ["subject", "createdAt"],
+                "properties": {
+                    "subject": { "type": "string", "format": "did" },
+                    "createdAt": { "type": "string", "format": "datetime" }
+                }
+            }
+        }
+    }
+}

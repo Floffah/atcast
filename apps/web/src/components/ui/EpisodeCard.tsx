@@ -18,10 +18,12 @@ export function EpisodeCard({
     uri: string;
 }) {
     const url = new AtUri(uri);
-    const id = url.rkey;
 
     return (
-        <Link href={`/show/${id}`} {...stylex.props(styles.container)}>
+        <Link
+            href={`/${url.host}/${url.rkey}`}
+            {...stylex.props(styles.container)}
+        >
             <h3 {...stylex.props(styles.name)}>{show.title}</h3>
             <p {...stylex.props(styles.description)}>{show.description}</p>
         </Link>

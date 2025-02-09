@@ -10,7 +10,7 @@ export async function ActivityFeedSection() {
             <h2 {...stylex.props(styles.heading)}>Activity</h2>
 
             <div {...stylex.props(styles.noActivityCTA)}>
-                <p>Follow some shows to see activity</p>
+                <p>Subscribe to some shows to see activity</p>
             </div>
         </section>
     );

@@ -20,7 +20,13 @@ export default async function ShowPage({
 
     const uri = AtUri.make(decodeURIComponent(repo), RecordNSIDs.EPISODE, id);
 
-    const episode = await getEpisode(uri);
+    let episode: Awaited<ReturnType<typeof getEpisode>>;
+
+    try {
+        episode = await getEpisode(uri);
+    } catch {
+        return notFound();
+    }
 
     if (!episode) {
         return notFound();

@@ -5,6 +5,7 @@ import { cache } from "react";
 import {
     ComAtprotoRepoGetRecord,
     LiveAtcastShowEpisode,
+    RecordNSIDs,
     createBskyClient,
 } from "@atcast/atproto";
 import { db, episodes, users } from "@atcast/models";
@@ -48,7 +49,7 @@ export const getEpisode = cache(async (uri: AtUri) => {
     try {
         record = await bskyClient.com.atproto.repo.getRecord({
             repo: uri.host,
-            collection: "live.atcast.show.episode",
+            collection: RecordNSIDs.EPISODE,
             rkey: uri.rkey,
         });
     } catch (_e) {}

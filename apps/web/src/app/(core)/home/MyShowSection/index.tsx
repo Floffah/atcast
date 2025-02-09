@@ -1,11 +1,12 @@
-import { AppBskyActorProfile } from "@atproto/api";
+import { AppBskyActorProfile, ComAtprotoRepoListRecords } from "@atproto/api";
 import stylex from "@stylexjs/stylex";
 import Link from "next/link";
 
-import { ComAtprotoRepoGetRecord } from "@atcast/atproto";
+import { LiveAtcastShowEpisode, RecordNSIDs } from "@atcast/atproto";
 
 import { Button } from "@/components/Button";
 import { Icon } from "@/components/Icon";
+import { EpisodeCard } from "@/components/ui/EpisodeCard";
 import { createPDSClientFromRuntime } from "@/lib/api/authedPDSClient";
 import { colours } from "@/styles/colours.stylex";
 import { fontSizes, fontWeights, lineHeights } from "@/styles/fonts.stylex";
@@ -16,18 +17,31 @@ import PlusIcon from "~icons/mdi/movie-plus-outline";
 export async function MyShowSection() {
     const { client, user } = await createPDSClientFromRuntime();
 
-    let recordsResponse: ComAtprotoRepoGetRecord.Response | undefined =
-        undefined;
+    let profile: AppBskyActorProfile.Record | null = null;
+    let episodes: (ComAtprotoRepoListRecords.OutputSchema["records"][number] & {
+        value: LiveAtcastShowEpisode.Record;
+    })[] = [];
 
     if (client) {
-        recordsResponse = await client.com.atproto.repo.getRecord({
+        const profileRecordResponse = await client.com.atproto.repo.getRecord({
             repo: user.did,
-            collection: "app.bsky.actor.profile",
+            collection: RecordNSIDs.PROFILE,
             rkey: "self",
         });
-    }
 
-    const profile = recordsResponse?.data?.value as AppBskyActorProfile.Record;
+        profile = profileRecordResponse?.data
+            ?.value as AppBskyActorProfile.Record;
+
+        if (profile) {
+            const episodesResponse = await client.com.atproto.repo.listRecords({
+                repo: user.did,
+                collection: RecordNSIDs.EPISODE,
+                limit: 10,
+            });
+
+            episodes = (episodesResponse?.data?.records as any) ?? [];
+        }
+    }
 
     return (
         <section {...stylex.props(styles.container)}>
@@ -78,6 +92,14 @@ export async function MyShowSection() {
                     )}
 
                     <div {...stylex.props(styles.episodesGrid)}>
+                        {episodes.map((episode) => (
+                            <EpisodeCard
+                                key={episode.uri}
+                                show={episode.value}
+                                uri={episode.uri}
+                            />
+                        ))}
+
                         <Link
                             href={`/publish`}
                             {...stylex.props(styles.publishCTA)}
@@ -88,7 +110,7 @@ export async function MyShowSection() {
                                     label="Add episode"
                                     {...stylex.props(styles.publishMessageIcon)}
                                 />
-                                Click to publish a new episode
+                                Publish
                             </p>
                         </Link>
                     </div>
@@ -160,6 +182,8 @@ const styles = stylex.create({
     publishCTA: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         transitionProperty: "scale,background-color",
         transitionDuration: "150ms",
         padding: sizes.spacing4,
@@ -189,6 +213,7 @@ const styles = stylex.create({
         gap: sizes.spacing3,
         fontSize: fontSizes.base,
         lineHeight: lineHeights.base,
+        fontWeight: fontWeights.semibold,
         color: colours.gray500,
     },
     publishMessageIcon: {
