@@ -24,12 +24,15 @@
       "outputLogs": "new-only"
     }
   },
-  "globalEnv": ["DATABASE_URL", "NEXT_PUBLIC_BASE_URL"],
+  "globalEnv": ["UPLOADTHING_HOST", "NEXT_PUBLIC_BASE_URL"],
   "globalPassThroughEnv": [
     "NODE_ENV",
     "CI",
     "VERCEL",
     "VERCEL_ENV",
-    "VERCEL_URL"
+    "VERCEL_URL",
+    "DATABASE_URL",
+    "UPLOADTHING_TOKEN",
+    "PORT"
   ]
 }
