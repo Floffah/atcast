@@ -2,7 +2,7 @@
     "name": "@atcast/worker",
     "scripts": {
         "start": "bun run src/index.ts",
-        "dev": "bun run --watch src/index.ts",
+        "dev": "bun run --watch --no-clear-screen src/index.ts",
         "lint": "tsc --noEmit && eslint --ext .ts,.js src --ignore-path ../../.gitignore",
         "format": "prettier --write **/*.{ts,js,json} src --ignore-path ../../.gitignore"
     },

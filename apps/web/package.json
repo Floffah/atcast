@@ -28,7 +28,7 @@
         "date-fns": "^4.1.0",
         "drizzle-orm": "^0.39.2",
         "nanoid": "^5.0.9",
-        "next": "^15.2.0-canary.46",
+        "next": "^15.2.0-canary.47",
         "normalize.css": "^8.0.1",
         "pkce-challenge": "^4.1.0",
         "react": "^19.0.0",
